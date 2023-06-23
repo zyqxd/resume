@@ -1,12 +1,29 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans|Garamond);
 
-/* GENERAL SETTINGS */
-html,
 body {
-  margin: 0px;
-  padding: 1em;
-  font-weight: 300;
-  min-width: 375px;
+  background: rgb(204, 204, 204);
+  font-size: 1em;
+  padding: 0.5em;
+}
+
+page[size="A4"] {
+  background: white;
+  width: 21cm;
+  height: 29.7cm;
+  display: block;
+
+  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+  padding: 3em;
+  margin: 1em auto;
+}
+
+@media print {
+  body,
+  page[size="A4"] {
+    margin: 0;
+    box-shadow: 0;
+    padding: 0;
+  }
 }
 
 * {
@@ -28,4 +45,8 @@ h6 {
 
 .sans-serif {
   font-family: "Open Sans", sans-serif;
+}
+
+.center {
+  text-align: center;
 }
