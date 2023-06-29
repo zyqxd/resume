@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans@400;300|Garamond);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans@600;400;300|Garamond);
 
 body {
   background: rgb(204, 204, 204);
@@ -12,7 +12,7 @@ page[size="A4"] {
   height: 29.7cm;
   display: block;
 
-  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+  /* box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5); */
   padding: 3em;
   margin: 1em auto;
 }
@@ -23,6 +23,10 @@ page[size="A4"] {
     margin: 0;
     box-shadow: 0;
     padding: 0;
+  }
+
+  * {
+    box-shadow: 0;
   }
 }
 
@@ -36,19 +40,21 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Garamond", serif;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
   margin-bottom: 0.1em;
 }
 
 ul,
 ol {
   margin: 0;
+  margin-top: 0.5em;
   margin-left: 1.2em;
   padding: 0;
 }
 
 li {
-  margin-bottom: 0.2em;
+  margin: 0.4em 0;
 }
 
 .serif {
@@ -92,6 +98,7 @@ li {
   font-family: "Open Sans", sans-serif;
   font-weight: 300;
   font-size: 0.8em;
+  line-height: 1.3em;
   margin-bottom: 0.5em;
 }
 
@@ -100,4 +107,8 @@ li {
   font-weight: 300;
   font-size: 0.7em;
   margin-bottom: 0.5em;
+}
+
+.page-break {
+  page-break-after: always;
 }
