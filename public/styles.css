@@ -12,17 +12,22 @@ page[size="A4"] {
   height: 29.7cm;
   display: block;
 
-  /* box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5); */
   padding: 3em;
   margin: 1em auto;
+  page-break-after: always;
 }
 
 @media print {
-  body,
-  page[size="A4"] {
+  body {
     margin: 0;
     box-shadow: 0;
     padding: 0;
+  }
+
+  page {
+    margin: 0;
+    padding: 0;
+    box-shadow: 0;
   }
 
   * {
@@ -50,6 +55,7 @@ ol {
   margin: 0;
   margin-top: 0.5em;
   margin-left: 1.2em;
+  margin-bottom: 0.5em;
   padding: 0;
 }
 
@@ -83,7 +89,7 @@ li {
   font-family: "Open Sans", sans-serif;
   font-size: 1.1em;
   font-weight: 300;
-  margin-top: 0.5em;
+  margin-top: 0.75em;
   margin-bottom: 0.3em;
   border-bottom: 0.5px solid #444;
 }
@@ -107,8 +113,4 @@ li {
   font-weight: 300;
   font-size: 0.7em;
   margin-bottom: 0.5em;
-}
-
-.page-break {
-  page-break-after: always;
 }
