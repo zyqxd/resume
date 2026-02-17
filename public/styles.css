@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans@600;400;300|Garamond);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:600,400,300);
 
 body {
   background: rgb(204, 204, 204);
@@ -6,32 +6,33 @@ body {
   padding: 0.5em;
 }
 
-page[size="A4"] {
+.resume {
   background: white;
-  width: 21cm;
-  height: 29.7cm;
+  max-width: 21cm;
   display: block;
-
   padding: 3em;
   margin: 1em auto;
-  page-break-after: always;
 }
 
 @media print {
   body {
     margin: 0;
-    box-shadow: 0;
     padding: 0;
+    background: white;
   }
 
-  page {
+  .resume {
     margin: 0;
-    padding: 0;
-    box-shadow: 0;
+    padding: 2cm;
+    max-width: none;
   }
 
-  * {
-    box-shadow: 0;
+  section {
+    break-inside: avoid;
+  }
+
+  .title {
+    break-after: avoid;
   }
 }
 
@@ -50,6 +51,21 @@ h6 {
   margin-bottom: 0.1em;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+@media print {
+  a {
+    text-decoration: none;
+  }
+}
+
 ul,
 ol {
   margin: 0;
@@ -63,14 +79,6 @@ li {
   margin: 0.4em 0;
 }
 
-.serif {
-  font-family: "Garamond", serif;
-}
-
-.sans-serif {
-  font-family: "Open Sans", sans-serif;
-}
-
 .center {
   text-align: center;
 }
@@ -82,7 +90,8 @@ li {
   text-transform: uppercase;
   margin-top: 1em;
   margin-bottom: 0.5em;
-  /* border-bottom: 1px solid black; */
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.2em;
 }
 
 .subtitle {
@@ -112,5 +121,6 @@ li {
   font-family: "Open Sans", sans-serif;
   font-weight: 300;
   font-size: 0.7em;
+  color: #555;
   margin-bottom: 0.5em;
 }
