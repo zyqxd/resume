@@ -1,0 +1,223 @@
+{
+  "main": {
+    "id": "83cabb38862e4e9b",
+    "type": "split",
+    "children": [
+      {
+        "id": "6c782998cc959284",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8cb5fa1151e60678",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "prompt.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "prompt"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "left",
+    "type": "split",
+    "children": [
+      {
+        "id": "54b0bc2b0a9163b8",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1a84a792ef54f20c",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "94af62d7c080cb4a",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "e745387f9ac8c2d5",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "right",
+    "type": "split",
+    "children": [
+      {
+        "id": "534de884fcab249c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d992261520336fde",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "prompt.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for prompt"
+            }
+          },
+          {
+            "id": "5bc8a84f41c6e4fd",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "prompt.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from prompt"
+            }
+          },
+          {
+            "id": "503b80c735a89a67",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "41b8a0d28593b45f",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "cbdcda29fa307379",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "prompt.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of prompt"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "command-palette:Open command palette": false,
+      "markdown-importer:Open format converter": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "8cb5fa1151e60678",
+  "lastOpenFiles": [
+    "index.md",
+    "technical-and-coding/ai-llm-integration/exercises/ANSWER_KEY.md",
+    "technical-and-coding/ai-llm-integration/exercises/rag_test_data.rb",
+    "technical-and-coding/ai-llm-integration/exercises/rag_pipeline.rb",
+    "technical-and-coding/ai-llm-integration/exercises/INSTRUCTIONS.md",
+    "technical-and-coding/ai-llm-integration/exercises",
+    "technical-and-coding/ai-llm-integration/index.md",
+    "technical-and-coding/ai-llm-integration",
+    "technical-and-coding/testing-and-quality/exercises/ANSWER_KEY.md",
+    "technical-and-coding/testing-and-quality/exercises/payment_service_spec.rb",
+    "technical-and-coding/testing-and-quality/exercises/payment_service.rb",
+    "technical-and-coding/testing-and-quality/exercises/INSTRUCTIONS.md",
+    "technical-and-coding/testing-and-quality/exercises",
+    "technical-and-coding/testing-and-quality/index.md",
+    "technical-and-coding/testing-and-quality",
+    "technical-and-coding/api-design/exercises/ANSWER_KEY.md",
+    "technical-and-coding/api-design/exercises/product_api.rb",
+    "technical-and-coding/api-design/exercises/INSTRUCTIONS.md",
+    "technical-and-coding/api-design/exercises",
+    "technical-and-coding/api-design/index.md",
+    "technical-and-coding/object-oriented-design/exercises/ANSWER_KEY.md",
+    "technical-and-coding/object-oriented-design/exercises/INSTRUCTIONS.md",
+    "technical-and-coding/object-oriented-design/index.md",
+    "technical-and-coding/concurrency-and-parallelism/exercises/ANSWER_KEY.md",
+    "system-design/exercises/03-distributed-task-scheduler/WALKTHROUGH.md",
+    "system-design/exercises/03-distributed-task-scheduler/PROMPT.md",
+    "system-design/exercises/02-ai-powered-search/WALKTHROUGH.md",
+    "technical-and-coding/concurrency-and-parallelism/exercises/INSTRUCTIONS.md",
+    "technical-and-coding/concurrency-and-parallelism/index.md",
+    "system-design/exercises/02-ai-powered-search/PROMPT.md",
+    "system-design/exercises/01-collaborative-document-editor/WALKTHROUGH.md",
+    "technical-and-coding/data-structures-and-algorithms/exercises/ANSWER_KEY.md",
+    "system-design/exercises/01-collaborative-document-editor/PROMPT.md",
+    "technical-and-coding/data-structures-and-algorithms/exercises/INSTRUCTIONS.md",
+    "system-design/ml-ai-infrastructure/index.md",
+    "technical-and-coding/data-structures-and-algorithms/index.md"
+  ]
+}
