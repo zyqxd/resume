@@ -431,6 +431,6 @@ end
 
 ## Related Topics
 
-- [[../data-structures-and-algorithms/index|Data Structures & Algorithms]] -- thread-safe data structures build on DSA fundamentals
-- [[../api-design/index|API Design]] -- rate limiting and connection pooling require concurrency knowledge
+- [[../01-data-structures-and-algorithms/index|Data Structures & Algorithms]] -- thread-safe data structures build on DSA fundamentals
+- [[../03-api-design/index|API Design]] -- rate limiting and connection pooling require concurrency knowledge
 - [[../system-design/index|System Design]] -- distributed systems extend concurrency across machines

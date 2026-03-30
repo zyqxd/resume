@@ -638,6 +638,6 @@ end
 
 ## Related Topics
 
-- [[../api-design/index|API Design]] -- designing APIs for AI-powered features (streaming, async)
-- [[../testing-and-quality/index|Testing & Quality]] -- testing non-deterministic AI outputs
+- [[../03-api-design/index|API Design]] -- designing APIs for AI-powered features (streaming, async)
+- [[../05-testing-and-quality/index|Testing & Quality]] -- testing non-deterministic AI outputs
 - [[../system-design/index|System Design]] -- architecting ML-powered systems at scale

@@ -344,8 +344,8 @@ Need mutual exclusion?
 
 ## Related Topics
 
-- [[../databases-and-storage/index|Databases & Storage]] -- CAP theorem, consistency models, replication
-- [[../fault-tolerance-and-reliability/index|Fault Tolerance]] -- handling failures in distributed systems
-- [[../scaling-writes/index|Scaling Writes]] -- sharding and cross-shard coordination
-- [[../async-processing/index|Async Processing]] -- distributed queues and ordering
-- [[../real-time-systems/index|Real-Time Systems]] -- CRDTs for conflict-free replication
+- [[../01-databases-and-storage/index|Databases & Storage]] -- CAP theorem, consistency models, replication
+- [[../04-fault-tolerance-and-reliability/index|Fault Tolerance]] -- handling failures in distributed systems
+- [[../03-scaling-writes/index|Scaling Writes]] -- sharding and cross-shard coordination
+- [[../05-async-processing/index|Async Processing]] -- distributed queues and ordering
+- [[../07-real-time-systems/index|Real-Time Systems]] -- CRDTs for conflict-free replication

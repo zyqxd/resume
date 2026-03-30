@@ -197,7 +197,7 @@ In a microservices architecture, each service owns its data and exposes it only 
 ### Challenges
 
 - **Cross-service queries** -- no joins across service boundaries. Requires API composition or denormalization.
-- **Distributed transactions** -- cannot use a single database transaction. Use [[../async-processing/index|sagas]] instead.
+- **Distributed transactions** -- cannot use a single database transaction. Use [[../05-async-processing/index|sagas]] instead.
 - **Data consistency** -- eventual consistency between services. Events/CDC propagate changes.
 
 ---
@@ -288,7 +288,7 @@ User Query -> Embed Query -> Vector DB (retrieve relevant docs)
                           Retrieved Context + Query -> LLM -> Response
 ```
 
-See [[../ml-ai-infrastructure/index|ML/AI Infrastructure]] for the full RAG system design.
+See [[../09-ml-ai-infrastructure/index|ML/AI Infrastructure]] for the full RAG system design.
 
 ---
 
@@ -324,8 +324,8 @@ What are the operational constraints?
 
 ## Related Topics
 
-- [[../scaling-reads/index|Scaling Reads]] -- indexing, caching, read replicas
-- [[../scaling-writes/index|Scaling Writes]] -- sharding, WAL, write-optimized engines
-- [[../distributed-systems-fundamentals/index|Distributed Systems]] -- consensus, replication, consistency
-- [[../ml-ai-infrastructure/index|ML/AI Infrastructure]] -- vector DBs in AI systems
-- [[../fault-tolerance-and-reliability/index|Fault Tolerance]] -- database failover and recovery
+- [[../02-scaling-reads/index|Scaling Reads]] -- indexing, caching, read replicas
+- [[../03-scaling-writes/index|Scaling Writes]] -- sharding, WAL, write-optimized engines
+- [[../06-distributed-systems-fundamentals/index|Distributed Systems]] -- consensus, replication, consistency
+- [[../09-ml-ai-infrastructure/index|ML/AI Infrastructure]] -- vector DBs in AI systems
+- [[../04-fault-tolerance-and-reliability/index|Fault Tolerance]] -- database failover and recovery

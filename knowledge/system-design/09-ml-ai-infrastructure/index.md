@@ -336,8 +336,8 @@ LLM providers (Anthropic, OpenAI) now offer prompt caching: if the prefix of you
 
 ## Related Topics
 
-- [[../databases-and-storage/index|Databases & Storage]] -- vector databases, storage options
-- [[../scaling-reads/index|Scaling Reads]] -- caching strategies for model outputs
-- [[../async-processing/index|Async Processing]] -- batch inference pipelines, training job orchestration
-- [[../api-gateway-and-service-mesh/index|API Gateway]] -- model serving behind gateways, LLM routing
-- [[../fault-tolerance-and-reliability/index|Fault Tolerance]] -- handling model serving failures, fallback models
+- [[../01-databases-and-storage/index|Databases & Storage]] -- vector databases, storage options
+- [[../02-scaling-reads/index|Scaling Reads]] -- caching strategies for model outputs
+- [[../05-async-processing/index|Async Processing]] -- batch inference pipelines, training job orchestration
+- [[../08-api-gateway-and-service-mesh/index|API Gateway]] -- model serving behind gateways, LLM routing
+- [[../04-fault-tolerance-and-reliability/index|Fault Tolerance]] -- handling model serving failures, fallback models

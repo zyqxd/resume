@@ -559,6 +559,6 @@ Key decisions: search strategy (by title, author, ISBN), reservation system, lat
 
 ## Related Topics
 
-- [[../api-design/index|API Design]] -- API design is the external expression of your OOD
-- [[../testing-and-quality/index|Testing & Quality]] -- good OOD makes testing easy; hard-to-test code is often poorly designed
+- [[../03-api-design/index|API Design]] -- API design is the external expression of your OOD
+- [[../05-testing-and-quality/index|Testing & Quality]] -- good OOD makes testing easy; hard-to-test code is often poorly designed
 - [[../system-design/index|System Design]] -- OOD at the class level scales to service-level design

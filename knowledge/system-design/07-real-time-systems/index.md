@@ -159,7 +159,7 @@ Per-topic channel:   feed:{topic}:updates
 Wildcard patterns:   user:*:status (subscribe to all user statuses)
 ```
 
-**Interview tip:** Redis Pub/Sub does not persist messages. If a subscriber disconnects and reconnects, it misses messages sent during the gap. For guaranteed delivery, use Redis Streams, Kafka, or a dedicated message broker. See [[../async-processing/index|Async Processing]] for durable messaging patterns.
+**Interview tip:** Redis Pub/Sub does not persist messages. If a subscriber disconnects and reconnects, it misses messages sent during the gap. For guaranteed delivery, use Redis Streams, Kafka, or a dedicated message broker. See [[../05-async-processing/index|Async Processing]] for durable messaging patterns.
 
 ---
 
@@ -313,8 +313,8 @@ Need presence?
 
 ## Related Topics
 
-- [[../scaling-reads/index|Scaling Reads]] -- caching and replication for read-heavy real-time feeds
-- [[../scaling-writes/index|Scaling Writes]] -- fan-out on write for feeds and notifications
-- [[../async-processing/index|Async Processing]] -- durable messaging with Kafka/queues
-- [[../fault-tolerance-and-reliability/index|Fault Tolerance]] -- handling connection failures and reconnection
-- [[../distributed-systems-fundamentals/index|Distributed Systems]] -- consistency models for real-time sync
+- [[../02-scaling-reads/index|Scaling Reads]] -- caching and replication for read-heavy real-time feeds
+- [[../03-scaling-writes/index|Scaling Writes]] -- fan-out on write for feeds and notifications
+- [[../05-async-processing/index|Async Processing]] -- durable messaging with Kafka/queues
+- [[../04-fault-tolerance-and-reliability/index|Fault Tolerance]] -- handling connection failures and reconnection
+- [[../06-distributed-systems-fundamentals/index|Distributed Systems]] -- consistency models for real-time sync

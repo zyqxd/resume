@@ -368,7 +368,7 @@ end
 
 ### AI/LLM Output Testing
 
-For AI integrations, test the structure and constraints, not the exact content. See [[../ai-llm-integration/index|AI & LLM Integration]] for detailed patterns.
+For AI integrations, test the structure and constraints, not the exact content. See [[../06-ai-llm-integration/index|AI & LLM Integration]] for detailed patterns.
 
 ```ruby
 it 'returns a summary within length constraints' do
@@ -469,7 +469,7 @@ What not to obsess over:
 
 ## Related Topics
 
-- [[../object-oriented-design/index|Object-Oriented Design]] -- good design makes testing easy
-- [[../api-design/index|API Design]] -- contract testing for APIs
-- [[../ai-llm-integration/index|AI & LLM Integration]] -- testing non-deterministic AI outputs
-- [[../concurrency-and-parallelism/index|Concurrency & Parallelism]] -- testing concurrent code
+- [[../02-object-oriented-design/index|Object-Oriented Design]] -- good design makes testing easy
+- [[../03-api-design/index|API Design]] -- contract testing for APIs
+- [[../06-ai-llm-integration/index|AI & LLM Integration]] -- testing non-deterministic AI outputs
+- [[../04-concurrency-and-parallelism/index|Concurrency & Parallelism]] -- testing concurrent code

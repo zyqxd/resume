@@ -393,8 +393,8 @@ Layer 5: Organizational
 
 ## Related Topics
 
-- [[../async-processing/index|Async Processing]] -- DLQs, retry policies for queue consumers
-- [[../distributed-systems-fundamentals/index|Distributed Systems]] -- partition tolerance, consensus under failure
-- [[../api-gateway-and-service-mesh/index|API Gateway & Service Mesh]] -- rate limiting, health checks at the edge
-- [[../databases-and-storage/index|Databases & Storage]] -- replication, failover, consistency under failure
-- [[../scaling-reads/index|Scaling Reads]] -- cache failure handling, replica failover
+- [[../05-async-processing/index|Async Processing]] -- DLQs, retry policies for queue consumers
+- [[../06-distributed-systems-fundamentals/index|Distributed Systems]] -- partition tolerance, consensus under failure
+- [[../08-api-gateway-and-service-mesh/index|API Gateway & Service Mesh]] -- rate limiting, health checks at the edge
+- [[../01-databases-and-storage/index|Databases & Storage]] -- replication, failover, consistency under failure
+- [[../02-scaling-reads/index|Scaling Reads]] -- cache failure handling, replica failover

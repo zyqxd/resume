@@ -260,7 +260,7 @@ Backpressure is a mechanism to handle situations where producers generate work f
 Set a maximum queue size. When full, producers are blocked or messages are rejected. This pushes backpressure upstream to the producer.
 
 **2. Rate Limiting Producers**
-Limit the rate at which producers can enqueue messages. See [[../api-gateway-and-service-mesh/index|API Gateway & Service Mesh]] for rate limiting algorithms.
+Limit the rate at which producers can enqueue messages. See [[../08-api-gateway-and-service-mesh/index|API Gateway & Service Mesh]] for rate limiting algorithms.
 
 **3. Load Shedding**
 When overloaded, intentionally drop lower-priority work to protect the system's ability to handle critical work.
@@ -305,7 +305,7 @@ Understanding message delivery semantics is critical for designing correct async
 | **At-least-once** | Message delivered 1+ times. May duplicate. | Most background jobs (with idempotency) |
 | **Exactly-once** | Message delivered exactly 1 time. | Financial transactions (hardest to achieve) |
 
-**Exactly-once is extremely hard** in distributed systems. Most systems achieve it through at-least-once delivery combined with [[../fault-tolerance-and-reliability/index|idempotency]] on the consumer side.
+**Exactly-once is extremely hard** in distributed systems. Most systems achieve it through at-least-once delivery combined with [[../04-fault-tolerance-and-reliability/index|idempotency]] on the consumer side.
 
 ---
 
@@ -340,8 +340,8 @@ Does the work span days/weeks?
 
 ## Related Topics
 
-- [[../scaling-writes/index|Scaling Writes]] -- CQRS and event sourcing use async projections
-- [[../fault-tolerance-and-reliability/index|Fault Tolerance]] -- retries, idempotency, circuit breakers for async consumers
-- [[../real-time-systems/index|Real-Time Systems]] -- pub/sub for real-time event delivery
-- [[../distributed-systems-fundamentals/index|Distributed Systems]] -- consensus and ordering in distributed queues
-- [[../api-gateway-and-service-mesh/index|API Gateway]] -- rate limiting as a form of backpressure
+- [[../03-scaling-writes/index|Scaling Writes]] -- CQRS and event sourcing use async projections
+- [[../04-fault-tolerance-and-reliability/index|Fault Tolerance]] -- retries, idempotency, circuit breakers for async consumers
+- [[../07-real-time-systems/index|Real-Time Systems]] -- pub/sub for real-time event delivery
+- [[../06-distributed-systems-fundamentals/index|Distributed Systems]] -- consensus and ordering in distributed queues
+- [[../08-api-gateway-and-service-mesh/index|API Gateway]] -- rate limiting as a form of backpressure

@@ -8,27 +8,27 @@ This knowledge bank is organized into six core topic areas. Each contains a prim
 
 ## Topics
 
-### [[data-structures-and-algorithms/index|Data Structures & Algorithms]] `core` `high-frequency`
+### 1. [[01-data-structures-and-algorithms/index|Data Structures & Algorithms]] `core` `high-frequency`
 
 The evergreen foundation. Every company still tests DSA regardless of their stance on AI in interviews. The key shift: interviewers care less about whether you memorized Dijkstra's and more about whether you can recognize patterns (sliding window, two pointers, BFS/DFS, dynamic programming) and reason about trade-offs in time/space complexity. Covers arrays, hash maps, trees, graphs, heaps, tries, and the major algorithmic patterns.
 
-### [[concurrency-and-parallelism/index|Concurrency & Parallelism]] `core` `staff-level`
-
-Critical for staff-level backend roles. Covers threads, mutexes, race conditions, deadlocks, and async patterns. Includes Ruby-specific concurrency: the GIL (GVL), Ractors, Fibers, and how to achieve true parallelism in MRI vs JRuby. Understanding concurrency primitives and being able to reason about thread safety separates senior from staff candidates.
-
-### [[object-oriented-design/index|Object-Oriented Design]] `core` `medium-frequency`
+### 2. [[02-object-oriented-design/index|Object-Oriented Design]] `core` `medium-frequency`
 
 SOLID principles, Gang of Four patterns (strategy, observer, factory, decorator), and modeling real-world systems. Staff-level interviews often include a 45-60 minute OOD round where you design a system like a parking lot, elevator, or card game from scratch. The emphasis is on clean abstractions, extensibility, and demonstrating that you think about maintenance and change over time.
 
-### [[api-design/index|API Design]] `core` `high-frequency`
+### 3. [[03-api-design/index|API Design]] `core` `high-frequency`
 
 REST best practices, GraphQL trade-offs, versioning strategies, pagination, rate limiting, and idempotency. Backend-heavy roles almost always include an API design component, either as a standalone round or embedded in system design. Includes a code review exercise with a buggy Ruby API covering authentication, error handling, and resource modeling.
 
-### [[testing-and-quality/index|Testing & Quality]] `core` `medium-frequency`
+### 4. [[04-concurrency-and-parallelism/index|Concurrency & Parallelism]] `core` `staff-level`
+
+Critical for staff-level backend roles. Covers threads, mutexes, race conditions, deadlocks, and async patterns. Includes Ruby-specific concurrency: the GIL (GVL), Ractors, Fibers, and how to achieve true parallelism in MRI vs JRuby. Understanding concurrency primitives and being able to reason about thread safety separates senior from staff candidates.
+
+### 5. [[05-testing-and-quality/index|Testing & Quality]] `core` `medium-frequency`
 
 Unit vs integration vs e2e testing, TDD workflow, mocking strategies, property-based testing, and mutation testing. Staff engineers are expected to have strong opinions on test architecture and to write tests that catch real bugs without being brittle. Includes an exercise on testing a complex Ruby service with external dependencies.
 
-### [[ai-llm-integration/index|AI & LLM Integration]] `emerging` `high-value`
+### 6. [[06-ai-llm-integration/index|AI & LLM Integration]] `emerging` `high-value`
 
 The hottest topic in 2025-2026 interviews. Prompt engineering, RAG (Retrieval-Augmented Generation) patterns, embedding-based search, AI agent architectures, and evaluating LLM outputs. Over 60% of ML-adjacent technical interviews now include LLM-related questions. Even for backend roles, companies want to see that you can integrate AI capabilities into production systems. Includes a coding exercise building a RAG pipeline in Ruby.
 

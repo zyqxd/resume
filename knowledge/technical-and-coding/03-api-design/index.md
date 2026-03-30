@@ -486,6 +486,6 @@ end
 
 ## Related Topics
 
-- [[../object-oriented-design/index|Object-Oriented Design]] -- API design is the external interface of your OOD
-- [[../testing-and-quality/index|Testing & Quality]] -- API testing strategies (contract testing, integration testing)
+- [[../02-object-oriented-design/index|Object-Oriented Design]] -- API design is the external interface of your OOD
+- [[../05-testing-and-quality/index|Testing & Quality]] -- API testing strategies (contract testing, integration testing)
 - [[../system-design/index|System Design]] -- APIs connect the components of your system design

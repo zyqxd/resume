@@ -299,15 +299,15 @@ Is durability critical but you need low latency?
   YES -> WAL + async apply
 
 Is the write pattern bursty?
-  YES -> Queue writes through a [[../async-processing/index|message queue]] and process asynchronously
+  YES -> Queue writes through a [[../05-async-processing/index|message queue]] and process asynchronously
 ```
 
 ---
 
 ## Related Topics
 
-- [[../scaling-reads/index|Scaling Reads]] -- the read-side counterpart
-- [[../databases-and-storage/index|Databases & Storage]] -- choosing write-optimized storage engines
-- [[../async-processing/index|Async Processing]] -- message queues for write buffering
-- [[../distributed-systems-fundamentals/index|Distributed Systems Fundamentals]] -- consensus for cross-shard coordination
-- [[../fault-tolerance-and-reliability/index|Fault Tolerance]] -- handling write failures and retries
+- [[../02-scaling-reads/index|Scaling Reads]] -- the read-side counterpart
+- [[../01-databases-and-storage/index|Databases & Storage]] -- choosing write-optimized storage engines
+- [[../05-async-processing/index|Async Processing]] -- message queues for write buffering
+- [[../06-distributed-systems-fundamentals/index|Distributed Systems Fundamentals]] -- consensus for cross-shard coordination
+- [[../04-fault-tolerance-and-reliability/index|Fault Tolerance]] -- handling write failures and retries

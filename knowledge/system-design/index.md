@@ -35,39 +35,39 @@ Summarize key decisions and trade-offs. Mention what you would add with more tim
 
 ## Topics
 
-### [[scaling-reads/index|Scaling Reads]]
+### 1. [[01-databases-and-storage/index|Databases & Storage]]
+
+Choosing the right database is one of the most consequential design decisions — every design starts with "where does the data live?" This covers SQL vs NoSQL selection, CAP theorem and PACELC, consistency models, transaction isolation levels, database-per-service, polyglot persistence, time-series databases, and vector databases. The 2025 landscape adds vector DBs as a critical storage primitive for AI-powered features. The key skill is matching storage technology to workload characteristics.
+
+### 2. [[02-scaling-reads/index|Scaling Reads]]
 
 Most production systems are read-heavy. Scaling reads involves caching strategies (write-through, write-back, write-around, cache-aside), read replicas, CDNs, indexing strategies (B-tree, LSM-tree, covering indexes), materialized views, and denormalization. Understanding when to cache versus replicate versus denormalize -- and the consistency trade-offs of each -- is fundamental to every system design discussion.
 
-### [[scaling-writes/index|Scaling Writes]]
+### 3. [[03-scaling-writes/index|Scaling Writes]]
 
 Scaling writes is harder than reads because writes must maintain data integrity. Core strategies include sharding (hash, range, geo), consistent hashing, write batching, WAL (Write-Ahead Logging), async writes, CQRS, and event sourcing. Sharding decisions are among the most impactful in a system design -- a poor shard key can create hot spots that undermine the entire scaling strategy.
 
-### [[real-time-systems/index|Real-Time Systems]]
-
-Real-time communication underpins chat, collaborative editing, live dashboards, notifications, and gaming. Key technologies are WebSockets, Server-Sent Events, long polling, pub/sub architectures, and fan-out patterns. Advanced topics include presence systems and conflict-free replicated data types (CRDTs) for collaborative editing. The scaling challenge is fan-out: delivering a message to millions of subscribers with low latency.
-
-### [[async-processing/index|Async Processing]]
-
-Asynchronous processing decouples time-sensitive request handling from background work. Core tools are message queues (Kafka, RabbitMQ, SQS), worker pools, saga pattern, workflow engines (Temporal), dead letter queues, and backpressure mechanisms. Understanding delivery guarantees (at-most-once, at-least-once, exactly-once) and when to use each queue technology is essential for any system that does work beyond the request-response cycle.
-
-### [[fault-tolerance-and-reliability/index|Fault Tolerance & Reliability]]
+### 4. [[04-fault-tolerance-and-reliability/index|Fault Tolerance & Reliability]]
 
 In distributed systems, failures are the norm. This topic covers retries with exponential backoff and jitter, idempotency keys, circuit breakers, bulkheads, health checks, self-healing, chaos engineering, and graceful degradation. A Staff-level answer shows layered defense: rate limiting at the gateway, circuit breakers at the service level, idempotency at the data level, and self-healing at the infrastructure level.
 
-### [[databases-and-storage/index|Databases & Storage]]
+### 5. [[05-async-processing/index|Async Processing]]
 
-Choosing the right database is one of the most consequential design decisions. This covers SQL vs NoSQL selection, CAP theorem and PACELC, consistency models, transaction isolation levels, database-per-service, polyglot persistence, time-series databases, and vector databases. The 2025 landscape adds vector DBs as a critical storage primitive for AI-powered features. The key skill is matching storage technology to workload characteristics.
+Asynchronous processing decouples time-sensitive request handling from background work. Core tools are message queues (Kafka, RabbitMQ, SQS), worker pools, saga pattern, workflow engines (Temporal), dead letter queues, and backpressure mechanisms. Understanding delivery guarantees (at-most-once, at-least-once, exactly-once) and when to use each queue technology is essential for any system that does work beyond the request-response cycle.
 
-### [[distributed-systems-fundamentals/index|Distributed Systems Fundamentals]]
+### 6. [[06-distributed-systems-fundamentals/index|Distributed Systems Fundamentals]]
 
 The theoretical foundation for everything else. Covers consensus algorithms (Raft, Paxos), leader election, distributed locks, clock synchronization (Lamport clocks, vector clocks), partition tolerance, two-phase commit, gossip protocols, and quorums. You do not need to implement Raft in an interview, but you must understand why it exists, what it guarantees, and when to use consensus-based systems.
 
-### [[api-gateway-and-service-mesh/index|API Gateway & Service Mesh]]
+### 7. [[07-real-time-systems/index|Real-Time Systems]]
+
+Real-time communication underpins chat, collaborative editing, live dashboards, notifications, and gaming. Key technologies are WebSockets, Server-Sent Events, long polling, pub/sub architectures, and fan-out patterns. Advanced topics include presence systems and conflict-free replicated data types (CRDTs) for collaborative editing. The scaling challenge is fan-out: delivering a message to millions of subscribers with low latency.
+
+### 8. [[08-api-gateway-and-service-mesh/index|API Gateway & Service Mesh]]
 
 Traffic management in microservices architectures. Covers load balancing strategies (round robin, least connections, P2C), rate limiting algorithms (token bucket, sliding window), service discovery, API gateway patterns (BFF, aggregation), sidecar proxy, mTLS, and observability (metrics, logs, traces, OpenTelemetry). These are the operational patterns that make production systems actually work.
 
-### [[ml-ai-infrastructure/index|ML/AI Infrastructure]]
+### 9. [[09-ml-ai-infrastructure/index|ML/AI Infrastructure]]
 
 The newest and fastest-growing topic area. Covers model serving at scale, feature stores, embedding storage and retrieval, RAG architecture, GPU scheduling, A/B testing ML models, and LLM caching/routing. Even for non-ML roles, understanding how to build infrastructure for AI features (semantic search, recommendations, conversational AI) is increasingly expected at the Staff level.
 

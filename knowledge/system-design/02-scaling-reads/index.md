@@ -179,7 +179,7 @@ A materialized view is a precomputed query result stored as a table. Unlike a re
 **Use cases:**
 - Complex aggregation queries (dashboards, reports)
 - Joining multiple tables that are expensive to compute on every read
-- Denormalized read models in a [[../scaling-writes/index|CQRS]] architecture
+- Denormalized read models in a [[../03-scaling-writes/index|CQRS]] architecture
 
 **Refresh strategies:**
 - **Full refresh** -- recompute the entire view. Simple but expensive for large datasets.
@@ -228,7 +228,7 @@ Is the data static or near-static?
   NO  -> How frequently does it change?
     Rarely (minutes to hours) -> Cache-aside with TTL + read replicas
     Frequently (seconds) -> Read replicas + event-driven cache invalidation
-    Real-time -> Consider [[../real-time-systems/index|real-time patterns]] instead
+    Real-time -> Consider [[../07-real-time-systems/index|real-time patterns]] instead
 
 Is the read query complex (aggregations, joins)?
   YES -> Materialized views or denormalization
@@ -243,8 +243,8 @@ Is the dataset large (billions of rows)?
 
 ## Related Topics
 
-- [[../scaling-writes/index|Scaling Writes]] -- the write-side counterpart
-- [[../databases-and-storage/index|Databases & Storage]] -- choosing the right storage engine
-- [[../real-time-systems/index|Real-Time Systems]] -- when reads need to be live
-- [[../api-gateway-and-service-mesh/index|API Gateway & Service Mesh]] -- edge caching and CDN integration
-- [[../fault-tolerance-and-reliability/index|Fault Tolerance]] -- handling cache failures and replica lag
+- [[../03-scaling-writes/index|Scaling Writes]] -- the write-side counterpart
+- [[../01-databases-and-storage/index|Databases & Storage]] -- choosing the right storage engine
+- [[../07-real-time-systems/index|Real-Time Systems]] -- when reads need to be live
+- [[../08-api-gateway-and-service-mesh/index|API Gateway & Service Mesh]] -- edge caching and CDN integration
+- [[../04-fault-tolerance-and-reliability/index|Fault Tolerance]] -- handling cache failures and replica lag

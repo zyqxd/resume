@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "prompt.md",
+                "file": "system-design/index.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "prompt"
+              "title": "index"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "prompt.md",
+                "file": "system-design/index.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for prompt"
+              "title": "Backlinks for index"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "prompt.md",
+                "file": "system-design/index.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from prompt"
+              "title": "Outgoing links from index"
             }
           },
           {
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "prompt.md",
+                "file": "system-design/index.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of prompt"
+              "title": "Outline of index"
             }
           }
         ]
@@ -183,41 +183,41 @@
   },
   "active": "8cb5fa1151e60678",
   "lastOpenFiles": [
-    "index.md",
-    "technical-and-coding/ai-llm-integration/exercises/ANSWER_KEY.md",
-    "technical-and-coding/ai-llm-integration/exercises/rag_test_data.rb",
-    "technical-and-coding/ai-llm-integration/exercises/rag_pipeline.rb",
-    "technical-and-coding/ai-llm-integration/exercises/INSTRUCTIONS.md",
-    "technical-and-coding/ai-llm-integration/exercises",
-    "technical-and-coding/ai-llm-integration/index.md",
-    "technical-and-coding/ai-llm-integration",
-    "technical-and-coding/testing-and-quality/exercises/ANSWER_KEY.md",
-    "technical-and-coding/testing-and-quality/exercises/payment_service_spec.rb",
-    "technical-and-coding/testing-and-quality/exercises/payment_service.rb",
-    "technical-and-coding/testing-and-quality/exercises/INSTRUCTIONS.md",
-    "technical-and-coding/testing-and-quality/exercises",
-    "technical-and-coding/testing-and-quality/index.md",
-    "technical-and-coding/testing-and-quality",
-    "technical-and-coding/api-design/exercises/ANSWER_KEY.md",
-    "technical-and-coding/api-design/exercises/product_api.rb",
-    "technical-and-coding/api-design/exercises/INSTRUCTIONS.md",
-    "technical-and-coding/api-design/exercises",
-    "technical-and-coding/api-design/index.md",
-    "technical-and-coding/object-oriented-design/exercises/ANSWER_KEY.md",
-    "technical-and-coding/object-oriented-design/exercises/INSTRUCTIONS.md",
-    "technical-and-coding/object-oriented-design/index.md",
-    "technical-and-coding/concurrency-and-parallelism/exercises/ANSWER_KEY.md",
-    "system-design/exercises/03-distributed-task-scheduler/WALKTHROUGH.md",
-    "system-design/exercises/03-distributed-task-scheduler/PROMPT.md",
-    "system-design/exercises/02-ai-powered-search/WALKTHROUGH.md",
-    "technical-and-coding/concurrency-and-parallelism/exercises/INSTRUCTIONS.md",
-    "technical-and-coding/concurrency-and-parallelism/index.md",
-    "system-design/exercises/02-ai-powered-search/PROMPT.md",
-    "system-design/exercises/01-collaborative-document-editor/WALKTHROUGH.md",
-    "technical-and-coding/data-structures-and-algorithms/exercises/ANSWER_KEY.md",
-    "system-design/exercises/01-collaborative-document-editor/PROMPT.md",
-    "technical-and-coding/data-structures-and-algorithms/exercises/INSTRUCTIONS.md",
-    "system-design/ml-ai-infrastructure/index.md",
-    "technical-and-coding/data-structures-and-algorithms/index.md"
+    "system-design/09-ml-ai-infrastructure/index.md",
+    "system-design/09-ml-ai-infrastructure",
+    "system-design/08-api-gateway-and-service-mesh/index.md",
+    "system-design/08-api-gateway-and-service-mesh",
+    "system-design/07-real-time-systems/index.md",
+    "system-design/07-real-time-systems",
+    "system-design/06-distributed-systems-fundamentals/index.md",
+    "system-design/06-distributed-systems-fundamentals",
+    "system-design/05-async-processing/index.md",
+    "system-design/05-async-processing",
+    "system-design/04-fault-tolerance-and-reliability/index.md",
+    "system-design/04-fault-tolerance-and-reliability",
+    "system-design/03-scaling-writes/index.md",
+    "system-design/03-scaling-writes",
+    "system-design/02-scaling-reads/index.md",
+    "system-design/02-scaling-reads",
+    "system-design/01-databases-and-storage/index.md",
+    "system-design/01-databases-and-storage",
+    "technical-and-coding/06-ai-llm-integration/exercises/rag_test_data.rb",
+    "technical-and-coding/06-ai-llm-integration/exercises/INSTRUCTIONS.md",
+    "technical-and-coding/06-ai-llm-integration/exercises/ANSWER_KEY.md",
+    "technical-and-coding/06-ai-llm-integration/index.md",
+    "technical-and-coding/05-testing-and-quality/exercises/INSTRUCTIONS.md",
+    "technical-and-coding/05-testing-and-quality/exercises/ANSWER_KEY.md",
+    "technical-and-coding/05-testing-and-quality/index.md",
+    "technical-and-coding/04-concurrency-and-parallelism/exercises/INSTRUCTIONS.md",
+    "technical-and-coding/04-concurrency-and-parallelism/exercises/ANSWER_KEY.md",
+    "technical-and-coding/04-concurrency-and-parallelism/index.md",
+    "technical-and-coding/03-api-design/exercises/INSTRUCTIONS.md",
+    "technical-and-coding/03-api-design/exercises/ANSWER_KEY.md",
+    "technical-and-coding/03-api-design/index.md",
+    "technical-and-coding/02-object-oriented-design/exercises/INSTRUCTIONS.md",
+    "technical-and-coding/02-object-oriented-design/exercises/ANSWER_KEY.md",
+    "technical-and-coding/02-object-oriented-design/index.md",
+    "technical-and-coding/01-data-structures-and-algorithms/exercises/INSTRUCTIONS.md",
+    "technical-and-coding/01-data-structures-and-algorithms/exercises/ANSWER_KEY.md"
   ]
 }

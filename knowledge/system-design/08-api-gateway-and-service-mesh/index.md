@@ -362,8 +362,8 @@ Observability at every layer:
 
 ## Related Topics
 
-- [[../fault-tolerance-and-reliability/index|Fault Tolerance]] -- circuit breakers, retries, health checks
-- [[../scaling-reads/index|Scaling Reads]] -- CDN as an edge caching layer
-- [[../distributed-systems-fundamentals/index|Distributed Systems]] -- service discovery, coordination
-- [[../async-processing/index|Async Processing]] -- rate limiting as backpressure
-- [[../ml-ai-infrastructure/index|ML/AI Infrastructure]] -- model serving behind API gateways
+- [[../04-fault-tolerance-and-reliability/index|Fault Tolerance]] -- circuit breakers, retries, health checks
+- [[../02-scaling-reads/index|Scaling Reads]] -- CDN as an edge caching layer
+- [[../06-distributed-systems-fundamentals/index|Distributed Systems]] -- service discovery, coordination
+- [[../05-async-processing/index|Async Processing]] -- rate limiting as backpressure
+- [[../09-ml-ai-infrastructure/index|ML/AI Infrastructure]] -- model serving behind API gateways

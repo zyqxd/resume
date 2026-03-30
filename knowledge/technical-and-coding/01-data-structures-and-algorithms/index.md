@@ -630,6 +630,6 @@ end
 
 ## Related Topics
 
-- [[../concurrency-and-parallelism/index|Concurrency & Parallelism]] -- concurrent data structure access patterns
-- [[../api-design/index|API Design]] -- pagination and filtering often involve tree/graph traversal
+- [[../04-concurrency-and-parallelism/index|Concurrency & Parallelism]] -- concurrent data structure access patterns
+- [[../03-api-design/index|API Design]] -- pagination and filtering often involve tree/graph traversal
 - [[../system-design/index|System Design]] -- distributed data structures, consistent hashing, B-trees
