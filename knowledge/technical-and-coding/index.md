@@ -2,7 +2,7 @@
 
 The technical interview landscape has shifted significantly in the post-AI era (2025-2026). While data structures and algorithms remain the foundation at every major company (including AI-native companies like Anthropic and OpenAI), the emphasis has moved from rote algorithmic cleverness toward reasoning under constraints, real-world system thinking, and AI-augmented problem solving. Meta now pilots AI-enabled coding rounds where candidates use an AI assistant in CoderPad. Google has returned to in-person interviews with broader scope. Nearly half of hiring managers prefer real-world coding tasks over abstract puzzles. For staff-level roles, the bar continues to rise: you are expected to demonstrate architectural fluency, articulate trade-offs, and operate across the full stack of concerns from concurrency to API design to AI integration.
 
-This knowledge bank is organized into six core topic areas. Each contains a primer with key concepts and at least one hands-on exercise following the code-review or implementation format.
+This knowledge bank is organized into nine core topic areas. Each contains a primer with key concepts and at least one hands-on exercise following the code-review or implementation format.
 
 ---
 
@@ -31,6 +31,18 @@ Unit vs integration vs e2e testing, TDD workflow, mocking strategies, property-b
 ### 6. [[06-ai-llm-integration/index|AI & LLM Integration]] `emerging` `high-value`
 
 The hottest topic in 2025-2026 interviews. Prompt engineering, RAG (Retrieval-Augmented Generation) patterns, embedding-based search, AI agent architectures, and evaluating LLM outputs. Over 60% of ML-adjacent technical interviews now include LLM-related questions. Even for backend roles, companies want to see that you can integrate AI capabilities into production systems. Includes a coding exercise building a RAG pipeline in Ruby.
+
+### 7. [[07-advanced-data-structures/index|Advanced Data Structures]] `core` `staff-level`
+
+Beyond the basics: Union-Find, segment trees, Fenwick trees, monotonic stacks/queues, LRU cache, skip lists, Bloom filters, and B-trees. These structures separate staff from senior in coding rounds — Union-Find and monotonic stacks appear directly as problems, while segment trees and Bloom filters demonstrate depth in system design discussions. Includes mermaid visualizations and Ruby implementations.
+
+### 8. [[08-search-algorithms/index|Search Algorithms]] `core` `high-frequency`
+
+Deep dive into binary search (standard, rotated, bisect left/right, search on answer space), DFS (cycle detection, topological sort, traversals), BFS (multi-source, 0-1 BFS, bidirectional), Dijkstra's, Bellman-Ford, and A*. Covers when to use which algorithm, why negative weights break Dijkstra's, and the binary-search-on-answer-space pattern that solves a surprising number of problems.
+
+### 9. [[09-dynamic-programming/index|Dynamic Programming]] `core` `high-frequency`
+
+The hardest pattern for most candidates, given its own comprehensive treatment. Covers all major DP families: 1D, 2D/grid, string, knapsack, interval, tree, bitmask, and state machine DP. Includes a recognition cheat sheet for identifying which pattern applies, mermaid diagrams for visualizing subproblem structure, and space optimization techniques.
 
 ---
 
