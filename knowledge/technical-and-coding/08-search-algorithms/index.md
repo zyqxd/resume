@@ -12,55 +12,58 @@ Binary search is deceptively deep. The basic version is trivial, but the variati
 
 ### Standard Binary Search
 
-```ruby
-def binary_search(nums, target)
-  lo, hi = 0, nums.length - 1
-  while lo <= hi
-    mid = lo + (hi - lo) / 2  # avoid overflow (matters in other languages)
-    if nums[mid] == target
-      return mid
-    elsif nums[mid] < target
-      lo = mid + 1
-    else
-      hi = mid - 1
-    end
-  end
-  -1
-end
+```typescript
+function binarySearch(nums: number[], target: number): number {
+  let lo = 0;
+  let hi = nums.length - 1;
+  while (lo <= hi) {
+    const mid = lo + Math.floor((hi - lo) / 2); // avoid overflow (matters in other languages)
+    if (nums[mid] === target) {
+      return mid;
+    } else if (nums[mid] < target) {
+      lo = mid + 1;
+    } else {
+      hi = mid - 1;
+    }
+  }
+  return -1;
+}
 ```
 
 ### Bisect Left / Bisect Right
 
 These find the insertion point — the first position where you could insert the target and maintain sorted order. Bisect left gives the leftmost match, bisect right gives one past the rightmost match.
 
-```ruby
-# Find the first index where nums[i] >= target
-def bisect_left(nums, target)
-  lo, hi = 0, nums.length
-  while lo < hi
-    mid = lo + (hi - lo) / 2
-    if nums[mid] < target
-      lo = mid + 1
-    else
-      hi = mid
-    end
-  end
-  lo
-end
+```typescript
+// Find the first index where nums[i] >= target
+function bisectLeft(nums: number[], target: number): number {
+  let lo = 0;
+  let hi = nums.length;
+  while (lo < hi) {
+    const mid = lo + Math.floor((hi - lo) / 2);
+    if (nums[mid] < target) {
+      lo = mid + 1;
+    } else {
+      hi = mid;
+    }
+  }
+  return lo;
+}
 
-# Find the first index where nums[i] > target
-def bisect_right(nums, target)
-  lo, hi = 0, nums.length
-  while lo < hi
-    mid = lo + (hi - lo) / 2
-    if nums[mid] <= target
-      lo = mid + 1
-    else
-      hi = mid
-    end
-  end
-  lo
-end
+// Find the first index where nums[i] > target
+function bisectRight(nums: number[], target: number): number {
+  let lo = 0;
+  let hi = nums.length;
+  while (lo < hi) {
+    const mid = lo + Math.floor((hi - lo) / 2);
+    if (nums[mid] <= target) {
+      lo = mid + 1;
+    } else {
+      hi = mid;
+    }
+  }
+  return lo;
+}
 ```
 
 **Counting occurrences in sorted array:** `bisect_right(nums, target) - bisect_left(nums, target)`.
@@ -69,81 +72,85 @@ end
 
 The trick: at least one half of the array around `mid` is always sorted. Determine which half is sorted, then check if the target falls within that sorted half.
 
-```ruby
-def search_rotated(nums, target)
-  lo, hi = 0, nums.length - 1
-  while lo <= hi
-    mid = lo + (hi - lo) / 2
-    return mid if nums[mid] == target
+```typescript
+function searchRotated(nums: number[], target: number): number {
+  let lo = 0;
+  let hi = nums.length - 1;
+  while (lo <= hi) {
+    const mid = lo + Math.floor((hi - lo) / 2);
+    if (nums[mid] === target) return mid;
 
-    if nums[lo] <= nums[mid]
-      # Left half is sorted
-      if nums[lo] <= target && target < nums[mid]
-        hi = mid - 1
-      else
-        lo = mid + 1
-      end
-    else
-      # Right half is sorted
-      if nums[mid] < target && target <= nums[hi]
-        lo = mid + 1
-      else
-        hi = mid - 1
-      end
-    end
-  end
-  -1
-end
+    if (nums[lo] <= nums[mid]) {
+      // Left half is sorted
+      if (nums[lo] <= target && target < nums[mid]) {
+        hi = mid - 1;
+      } else {
+        lo = mid + 1;
+      }
+    } else {
+      // Right half is sorted
+      if (nums[mid] < target && target <= nums[hi]) {
+        lo = mid + 1;
+      } else {
+        hi = mid - 1;
+      }
+    }
+  }
+  return -1;
+}
 ```
 
 ### Binary Search on Answer Space
 
 One of the most powerful patterns: instead of searching through the input, binary search on the possible answer values. Works when you can frame the problem as "is answer X feasible?" and feasibility is monotonic.
 
-```ruby
-# Koko Eating Bananas: minimum eating speed to finish within h hours
-def min_eating_speed(piles, h)
-  lo, hi = 1, piles.max
+```typescript
+// Koko Eating Bananas: minimum eating speed to finish within h hours
+function minEatingSpeed(piles: number[], h: number): number {
+  let lo = 1;
+  let hi = Math.max(...piles);
 
-  while lo < hi
-    mid = lo + (hi - lo) / 2
-    hours_needed = piles.sum { |p| (p.to_f / mid).ceil }
-    if hours_needed <= h
-      hi = mid      # feasible — try smaller speed
-    else
-      lo = mid + 1  # too slow — need faster
-    end
-  end
-  lo
-end
+  while (lo < hi) {
+    const mid = lo + Math.floor((hi - lo) / 2);
+    const hoursNeeded = piles.reduce((sum, p) => sum + Math.ceil(p / mid), 0);
+    if (hoursNeeded <= h) {
+      hi = mid;      // feasible — try smaller speed
+    } else {
+      lo = mid + 1;  // too slow — need faster
+    }
+  }
+  return lo;
+}
 
-# Split Array Largest Sum: minimize the largest sum among k subarrays
-def split_array(nums, k)
-  lo, hi = nums.max, nums.sum
+// Split Array Largest Sum: minimize the largest sum among k subarrays
+function splitArray(nums: number[], k: number): number {
+  let lo = Math.max(...nums);
+  let hi = nums.reduce((a, b) => a + b, 0);
 
-  while lo < hi
-    mid = lo + (hi - lo) / 2
-    if can_split?(nums, k, mid)
-      hi = mid
-    else
-      lo = mid + 1
-    end
-  end
-  lo
-end
+  while (lo < hi) {
+    const mid = lo + Math.floor((hi - lo) / 2);
+    if (canSplit(nums, k, mid)) {
+      hi = mid;
+    } else {
+      lo = mid + 1;
+    }
+  }
+  return lo;
+}
 
-def can_split?(nums, k, max_sum)
-  count, current = 1, 0
-  nums.each do |n|
-    if current + n > max_sum
-      count += 1
-      current = n
-    else
-      current += n
-    end
-  end
-  count <= k
-end
+function canSplit(nums: number[], k: number, maxSum: number): boolean {
+  let count = 1;
+  let current = 0;
+  for (const n of nums) {
+    if (current + n > maxSum) {
+      count += 1;
+      current = n;
+    } else {
+      current += n;
+    }
+  }
+  return count <= k;
+}
 ```
 
 **Interview problems:** Search in Rotated Sorted Array, Find Minimum in Rotated Sorted Array, Koko Eating Bananas, Capacity to Ship Packages, Median of Two Sorted Arrays.
@@ -176,90 +183,114 @@ graph TD
 
 **DFS visit order: 1 → 2 → 4 → 5 → 3 → 6 → 7** (goes deep before wide)
 
-```ruby
-# Recursive DFS on a graph (adjacency list)
-def dfs_recursive(graph, node, visited = Set.new)
-  return if visited.include?(node)
-  visited.add(node)
-  # Process node here
-  graph[node].each { |neighbor| dfs_recursive(graph, neighbor, visited) }
-end
+```typescript
+// Recursive DFS on a graph (adjacency list)
+function dfsRecursive(
+  graph: Map<number, number[]>,
+  node: number,
+  visited: Set<number> = new Set()
+): void {
+  if (visited.has(node)) return;
+  visited.add(node);
+  // Process node here
+  for (const neighbor of graph.get(node) ?? []) {
+    dfsRecursive(graph, neighbor, visited);
+  }
+}
 
-# Iterative DFS — use when recursion depth might overflow the stack
-def dfs_iterative(graph, start)
-  visited = Set.new
-  stack = [start]
+// Iterative DFS — use when recursion depth might overflow the stack
+function dfsIterative(graph: Map<number, number[]>, start: number): void {
+  const visited = new Set<number>();
+  const stack = [start];
 
-  until stack.empty?
-    node = stack.pop
-    next if visited.include?(node)
-    visited.add(node)
-    # Process node here
-    graph[node].each { |neighbor| stack.push(neighbor) }
-  end
-end
+  while (stack.length > 0) {
+    const node = stack.pop()!;
+    if (visited.has(node)) continue;
+    visited.add(node);
+    // Process node here
+    for (const neighbor of graph.get(node) ?? []) {
+      stack.push(neighbor);
+    }
+  }
+}
 ```
 
 ### Tree Traversals
 
-```ruby
-# Pre-order: root, left, right (used for serialization)
-def preorder(root)
-  return [] unless root
-  [root.val] + preorder(root.left) + preorder(root.right)
-end
+```typescript
+interface TreeNode {
+  val: number;
+  left: TreeNode | null;
+  right: TreeNode | null;
+}
 
-# In-order: left, root, right (gives sorted order for BST)
-def inorder(root)
-  return [] unless root
-  inorder(root.left) + [root.val] + inorder(root.right)
-end
+// Pre-order: root, left, right (used for serialization)
+function preorder(root: TreeNode | null): number[] {
+  if (!root) return [];
+  return [root.val, ...preorder(root.left), ...preorder(root.right)];
+}
 
-# Post-order: left, right, root (used for deletion, expression evaluation)
-def postorder(root)
-  return [] unless root
-  postorder(root.left) + postorder(root.right) + [root.val]
-end
+// In-order: left, root, right (gives sorted order for BST)
+function inorder(root: TreeNode | null): number[] {
+  if (!root) return [];
+  return [...inorder(root.left), root.val, ...inorder(root.right)];
+}
+
+// Post-order: left, right, root (used for deletion, expression evaluation)
+function postorder(root: TreeNode | null): number[] {
+  if (!root) return [];
+  return [...postorder(root.left), ...postorder(root.right), root.val];
+}
 ```
 
 ### Cycle Detection
 
 Different approaches for directed vs undirected graphs:
 
-```ruby
-# Directed graph: cycle exists if we revisit a node in the current DFS path
-def has_cycle_directed?(graph, n)
-  visited = Array.new(n, :unvisited)  # :unvisited, :in_progress, :done
+```typescript
+const enum VisitState { Unvisited, InProgress, Done }
 
-  dfs = lambda do |node|
-    return true if visited[node] == :in_progress  # back edge = cycle
-    return false if visited[node] == :done
+// Directed graph: cycle exists if we revisit a node in the current DFS path
+function hasCycleDirected(graph: Map<number, number[]>, n: number): boolean {
+  const visited = new Array(n).fill(VisitState.Unvisited);
 
-    visited[node] = :in_progress
-    graph[node].each { |neighbor| return true if dfs.call(neighbor) }
-    visited[node] = :done
-    false
-  end
+  const dfs = (node: number): boolean => {
+    if (visited[node] === VisitState.InProgress) return true;  // back edge = cycle
+    if (visited[node] === VisitState.Done) return false;
 
-  (0...n).any? { |i| dfs.call(i) }
-end
+    visited[node] = VisitState.InProgress;
+    for (const neighbor of graph.get(node) ?? []) {
+      if (dfs(neighbor)) return true;
+    }
+    visited[node] = VisitState.Done;
+    return false;
+  };
 
-# Undirected graph: cycle exists if we visit a node that isn't our parent
-def has_cycle_undirected?(graph, n)
-  visited = Array.new(n, false)
+  for (let i = 0; i < n; i++) {
+    if (dfs(i)) return true;
+  }
+  return false;
+}
 
-  dfs = lambda do |node, parent|
-    visited[node] = true
-    graph[node].each do |neighbor|
-      next if neighbor == parent
-      return true if visited[neighbor]
-      return true if dfs.call(neighbor, node)
-    end
-    false
-  end
+// Undirected graph: cycle exists if we visit a node that isn't our parent
+function hasCycleUndirected(graph: Map<number, number[]>, n: number): boolean {
+  const visited = new Array(n).fill(false);
 
-  (0...n).any? { |i| !visited[i] && dfs.call(i, -1) }
-end
+  const dfs = (node: number, parent: number): boolean => {
+    visited[node] = true;
+    for (const neighbor of graph.get(node) ?? []) {
+      if (neighbor === parent) continue;
+      if (visited[neighbor]) return true;
+      if (dfs(neighbor, node)) return true;
+    }
+    return false;
+  };
+
+  for (let i = 0; i < n; i++) {
+    if (!visited[i] && dfs(i, -1)) return true;
+  }
+  return false;
+}
 ```
 
 ### Topological Sort
@@ -281,41 +312,52 @@ graph LR
 
 **Topological order: 0 → 1 → 2 → 3** (or 0 → 2 → 1 → 3)
 
-```ruby
-# Kahn's Algorithm (BFS-based) — preferred when you need to detect if a valid ordering exists
-def topological_sort_kahn(graph, n)
-  in_degree = Array.new(n, 0)
-  graph.each { |_u, neighbors| neighbors.each { |v| in_degree[v] += 1 } }
+```typescript
+// Kahn's Algorithm (BFS-based) — preferred when you need to detect if a valid ordering exists
+function topologicalSortKahn(graph: Map<number, number[]>, n: number): number[] {
+  const inDegree = new Array(n).fill(0);
+  for (const [, neighbors] of graph) {
+    for (const v of neighbors) {
+      inDegree[v] += 1;
+    }
+  }
 
-  queue = (0...n).select { |i| in_degree[i] == 0 }
-  order = []
+  const queue: number[] = [];
+  for (let i = 0; i < n; i++) {
+    if (inDegree[i] === 0) queue.push(i);
+  }
+  const order: number[] = [];
 
-  until queue.empty?
-    node = queue.shift
-    order << node
-    graph[node].each do |neighbor|
-      in_degree[neighbor] -= 1
-      queue << neighbor if in_degree[neighbor] == 0
-    end
-  end
+  while (queue.length > 0) {
+    const node = queue.shift()!;
+    order.push(node);
+    for (const neighbor of graph.get(node) ?? []) {
+      inDegree[neighbor] -= 1;
+      if (inDegree[neighbor] === 0) queue.push(neighbor);
+    }
+  }
 
-  order.length == n ? order : []  # empty = cycle exists
-end
+  return order.length === n ? order : [];  // empty = cycle exists
+}
 
-# DFS-based topological sort
-def topological_sort_dfs(graph, n)
-  visited = Array.new(n, false)
-  stack = []
+// DFS-based topological sort
+function topologicalSortDfs(graph: Map<number, number[]>, n: number): number[] {
+  const visited = new Array(n).fill(false);
+  const stack: number[] = [];
 
-  dfs = lambda do |node|
-    visited[node] = true
-    graph[node].each { |neighbor| dfs.call(neighbor) unless visited[neighbor] }
-    stack.push(node)  # add to stack after all descendants are processed
-  end
+  const dfs = (node: number): void => {
+    visited[node] = true;
+    for (const neighbor of graph.get(node) ?? []) {
+      if (!visited[neighbor]) dfs(neighbor);
+    }
+    stack.push(node);  // add to stack after all descendants are processed
+  };
 
-  (0...n).each { |i| dfs.call(i) unless visited[i] }
-  stack.reverse
-end
+  for (let i = 0; i < n; i++) {
+    if (!visited[i]) dfs(i);
+  }
+  return stack.reverse();
+}
 ```
 
 **Interview problems:** Number of Islands, Clone Graph, Course Schedule I/II, Pacific Atlantic Water Flow, Word Search, Surrounded Regions.
@@ -348,84 +390,94 @@ graph TD
 
 ### Standard BFS with Distance Tracking
 
-```ruby
-def bfs_shortest_path(graph, start, target)
-  queue = [[start, 0]]
-  visited = Set.new([start])
+```typescript
+function bfsShortestPath(
+  graph: Map<number, number[]>,
+  start: number,
+  target: number
+): number {
+  const queue: [number, number][] = [[start, 0]];
+  const visited = new Set<number>([start]);
 
-  until queue.empty?
-    node, dist = queue.shift
-    return dist if node == target
+  while (queue.length > 0) {
+    const [node, dist] = queue.shift()!;
+    if (node === target) return dist;
 
-    graph[node].each do |neighbor|
-      unless visited.include?(neighbor)
-        visited.add(neighbor)
-        queue << [neighbor, dist + 1]
-      end
-    end
-  end
-  -1  # unreachable
-end
+    for (const neighbor of graph.get(node) ?? []) {
+      if (!visited.has(neighbor)) {
+        visited.add(neighbor);
+        queue.push([neighbor, dist + 1]);
+      }
+    }
+  }
+  return -1;  // unreachable
+}
 ```
 
 ### Multi-Source BFS
 
 Start BFS from multiple sources simultaneously. Used when you need distances from any of several starting points (e.g., "distance from nearest 0 in a matrix").
 
-```ruby
-# 01 Matrix: find distance of each cell to nearest 0
-def update_matrix(mat)
-  rows, cols = mat.length, mat[0].length
-  dist = Array.new(rows) { Array.new(cols, Float::INFINITY) }
-  queue = []
+```typescript
+// 01 Matrix: find distance of each cell to nearest 0
+function updateMatrix(mat: number[][]): number[][] {
+  const rows = mat.length;
+  const cols = mat[0].length;
+  const dist = Array.from({ length: rows }, () => new Array(cols).fill(Infinity));
+  const queue: [number, number][] = [];
 
-  # Enqueue ALL zeros as sources
-  rows.times do |r|
-    cols.times do |c|
-      if mat[r][c] == 0
-        dist[r][c] = 0
-        queue << [r, c]
-      end
-    end
-  end
+  // Enqueue ALL zeros as sources
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (mat[r][c] === 0) {
+        dist[r][c] = 0;
+        queue.push([r, c]);
+      }
+    }
+  }
 
-  dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]]
-  until queue.empty?
-    r, c = queue.shift
-    dirs.each do |dr, dc|
-      nr, nc = r + dr, c + dc
-      next unless nr.between?(0, rows - 1) && nc.between?(0, cols - 1)
-      if dist[nr][nc] > dist[r][c] + 1
-        dist[nr][nc] = dist[r][c] + 1
-        queue << [nr, nc]
-      end
-    end
-  end
-  dist
-end
+  const dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+  while (queue.length > 0) {
+    const [r, c] = queue.shift()!;
+    for (const [dr, dc] of dirs) {
+      const nr = r + dr;
+      const nc = c + dc;
+      if (nr < 0 || nr >= rows || nc < 0 || nc >= cols) continue;
+      if (dist[nr][nc] > dist[r][c] + 1) {
+        dist[nr][nc] = dist[r][c] + 1;
+        queue.push([nr, nc]);
+      }
+    }
+  }
+  return dist;
+}
 ```
 
 ### 0-1 BFS
 
 When edge weights are only 0 or 1, use a deque instead of a priority queue. Push weight-0 edges to the front, weight-1 edges to the back. Runs in O(V + E) instead of O((V+E) log V).
 
-```ruby
-def zero_one_bfs(graph, start, n)
-  dist = Array.new(n, Float::INFINITY)
-  dist[start] = 0
-  deque = [start]
+```typescript
+function zeroOneBfs(
+  graph: Map<number, [number, number][]>,
+  start: number,
+  n: number
+): number[] {
+  const dist = new Array(n).fill(Infinity);
+  dist[start] = 0;
+  const deque: number[] = [start];
 
-  until deque.empty?
-    u = deque.shift
-    graph[u].each do |v, weight|  # weight is 0 or 1
-      if dist[u] + weight < dist[v]
-        dist[v] = dist[u] + weight
-        weight == 0 ? deque.unshift(v) : deque.push(v)
-      end
-    end
-  end
-  dist
-end
+  while (deque.length > 0) {
+    const u = deque.shift()!;
+    for (const [v, weight] of graph.get(u) ?? []) {  // weight is 0 or 1
+      if (dist[u] + weight < dist[v]) {
+        dist[v] = dist[u] + weight;
+        weight === 0 ? deque.unshift(v) : deque.push(v);
+      }
+    }
+  }
+  return dist;
+}
 ```
 
 **Interview problems:** Binary Tree Level Order Traversal, Word Ladder, Rotting Oranges, Shortest Path in Binary Matrix, Open the Lock.
@@ -481,37 +533,39 @@ graph LR
 
 **Shortest path A→D = 5** (via A→C→B→D, not A→C→D which is 6)
 
-```ruby
-require 'set'
+```typescript
+function dijkstra(
+  graph: Map<number, [number, number][]>,
+  start: number,
+  n: number
+): number[] {
+  const dist = new Array(n).fill(Infinity);
+  dist[start] = 0;
+  // Min-heap: [distance, node]
+  // TypeScript doesn't have a built-in heap, so we use a sorted array or
+  // implement with a simple priority queue
+  const pq: [number, number][] = [[0, start]];
+  const visited = new Set<number>();
 
-def dijkstra(graph, start, n)
-  dist = Array.new(n, Float::INFINITY)
-  dist[start] = 0
-  # Min-heap: [distance, node]
-  # Ruby doesn't have a built-in heap, so we use a sorted array or
-  # implement with a simple priority queue
-  pq = [[0, start]]
-  visited = Set.new
+  while (pq.length > 0) {
+    // Extract minimum — in production, use a real min-heap
+    pq.sort((a, b) => a[0] - b[0]);
+    const [d, u] = pq.shift()!;
+    if (visited.has(u)) continue;
+    visited.add(u);
 
-  until pq.empty?
-    # Extract minimum — in production, use a real min-heap
-    pq.sort_by! { |d, _| d }
-    d, u = pq.shift
-    next if visited.include?(u)
-    visited.add(u)
-
-    graph[u].each do |v, weight|
-      if dist[u] + weight < dist[v]
-        dist[v] = dist[u] + weight
-        pq << [dist[v], v]
-      end
-    end
-  end
-  dist
-end
+    for (const [v, weight] of graph.get(u) ?? []) {
+      if (dist[u] + weight < dist[v]) {
+        dist[v] = dist[u] + weight;
+        pq.push([dist[v], v]);
+      }
+    }
+  }
+  return dist;
+}
 ```
 
-**Interview tip:** Ruby lacks a built-in priority queue. In an interview, mention this and say "I'd use a min-heap here — let me simulate with a sorted structure for clarity." Interviewers care that you know the right data structure, not that Ruby has it built in.
+**Interview tip:** TypeScript lacks a built-in priority queue. In an interview, mention this and say "I'd use a min-heap here — let me simulate with a sorted structure for clarity." Interviewers care that you know the right data structure, not that your language has it built in.
 
 ### Why Negative Weights Break Dijkstra's
 
@@ -525,29 +579,33 @@ Bellman-Ford handles negative edge weights and detects negative cycles. It relax
 
 Time: O(V * E). Slower than Dijkstra's, but more general.
 
-```ruby
-def bellman_ford(edges, n, start)
-  dist = Array.new(n, Float::INFINITY)
-  dist[start] = 0
+```typescript
+function bellmanFord(
+  edges: [number, number, number][],
+  n: number,
+  start: number
+): number[] | null {
+  const dist = new Array(n).fill(Infinity);
+  dist[start] = 0;
 
-  # Relax all edges V-1 times
-  (n - 1).times do
-    edges.each do |u, v, weight|
-      if dist[u] != Float::INFINITY && dist[u] + weight < dist[v]
-        dist[v] = dist[u] + weight
-      end
-    end
-  end
+  // Relax all edges V-1 times
+  for (let i = 0; i < n - 1; i++) {
+    for (const [u, v, weight] of edges) {
+      if (dist[u] !== Infinity && dist[u] + weight < dist[v]) {
+        dist[v] = dist[u] + weight;
+      }
+    }
+  }
 
-  # Check for negative cycles (one more relaxation)
-  edges.each do |u, v, weight|
-    if dist[u] != Float::INFINITY && dist[u] + weight < dist[v]
-      return nil  # negative cycle detected
-    end
-  end
+  // Check for negative cycles (one more relaxation)
+  for (const [u, v, weight] of edges) {
+    if (dist[u] !== Infinity && dist[u] + weight < dist[v]) {
+      return null;  // negative cycle detected
+    }
+  }
 
-  dist
-end
+  return dist;
+}
 ```
 
 **When to use Bellman-Ford over Dijkstra's:**
@@ -563,30 +621,35 @@ end
 
 A* is Dijkstra's with a heuristic: it prioritizes nodes that seem closer to the goal. The priority is f(n) = g(n) + h(n) where g is the actual cost so far and h is the estimated remaining cost. If h is **admissible** (never overestimates), A* finds the optimal path.
 
-```ruby
-def a_star(graph, start, goal, heuristic)
-  dist = Hash.new(Float::INFINITY)
-  dist[start] = 0
-  pq = [[heuristic.call(start), 0, start]]  # [f, g, node]
-  visited = Set.new
+```typescript
+function aStar(
+  graph: Map<number, [number, number][]>,
+  start: number,
+  goal: number,
+  heuristic: (node: number) => number
+): number {
+  const dist = new Map<number, number>();
+  dist.set(start, 0);
+  const pq: [number, number, number][] = [[heuristic(start), 0, start]];  // [f, g, node]
+  const visited = new Set<number>();
 
-  until pq.empty?
-    pq.sort_by! { |f, _, _| f }
-    _f, g, u = pq.shift
-    return g if u == goal
-    next if visited.include?(u)
-    visited.add(u)
+  while (pq.length > 0) {
+    pq.sort((a, b) => a[0] - b[0]);
+    const [, g, u] = pq.shift()!;
+    if (u === goal) return g;
+    if (visited.has(u)) continue;
+    visited.add(u);
 
-    graph[u].each do |v, weight|
-      new_g = g + weight
-      if new_g < dist[v]
-        dist[v] = new_g
-        pq << [new_g + heuristic.call(v), new_g, v]
-      end
-    end
-  end
-  -1  # unreachable
-end
+    for (const [v, weight] of graph.get(u) ?? []) {
+      const newG = g + weight;
+      if (newG < (dist.get(v) ?? Infinity)) {
+        dist.set(v, newG);
+        pq.push([newG + heuristic(v), newG, v]);
+      }
+    }
+  }
+  return -1;  // unreachable
+}
 ```
 
 **Interview context:** A* rarely appears as a coding problem but comes up in discussions about pathfinding (games, maps, robotics). Know that it reduces to Dijkstra's when h(n) = 0, and to greedy best-first search when g(n) = 0. Common heuristics: Manhattan distance (grid, 4-directional), Euclidean distance (continuous space).
@@ -613,7 +676,7 @@ end
 
 1. **Binary search is the highest-ROI topic here.** Practice all four variants (standard, bisect left/right, rotated, answer space). Bisect left vs right off-by-one errors are the #1 source of bugs — drill until the templates are automatic.
 2. **BFS and DFS are table stakes.** You should be able to write both from memory in under 2 minutes. Practice switching between them on the same problem to build intuition for when each shines.
-3. **Dijkstra's comes up in ~15% of graph problems.** Know the algorithm cold, know why negative weights break it, and be ready to discuss the Ruby priority queue situation.
+3. **Dijkstra's comes up in ~15% of graph problems.** Know the algorithm cold, know why negative weights break it, and be ready to discuss the priority queue situation (TypeScript has no built-in heap).
 4. **Bellman-Ford and A* are secondary.** Know when to reach for them and be able to sketch the approach, but you're less likely to implement them from scratch in an interview.
 5. **Practice pattern:** For each algorithm, solve 3 problems. Time yourself. If you can't identify the right algorithm within 3 minutes of reading the problem, that's what to drill.
 

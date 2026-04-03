@@ -31,43 +31,47 @@ graph TD
     end
 ```
 
-```ruby
-class UnionFind
-  def initialize(n)
-    @parent = (0...n).to_a
-    @rank = Array.new(n, 0)
-    @count = n  # number of connected components
-  end
+```typescript
+class UnionFind {
+  parent: number[];
+  rank: number[];
+  count: number; // number of connected components
 
-  attr_reader :count
+  constructor(n: number) {
+    this.parent = Array.from({ length: n }, (_, i) => i);
+    this.rank = new Array(n).fill(0);
+    this.count = n;
+  }
 
-  def find(x)
-    @parent[x] = find(@parent[x]) while @parent[x] != x
-    # Iterative path compression — flattens the tree
-    root = x
-    root = @parent[root] until @parent[root] == root
-    while @parent[x] != root
-      @parent[x], x = root, @parent[x]
-    end
-    root
-  end
+  find(x: number): number {
+    // Iterative path compression — flattens the tree
+    let root = x;
+    while (this.parent[root] !== root) root = this.parent[root];
+    while (this.parent[x] !== root) {
+      const next = this.parent[x];
+      this.parent[x] = root;
+      x = next;
+    }
+    return root;
+  }
 
-  def union(x, y)
-    rx, ry = find(x), find(y)
-    return false if rx == ry
+  union(x: number, y: number): boolean {
+    let rx = this.find(x);
+    let ry = this.find(y);
+    if (rx === ry) return false;
 
-    # Union by rank — attach shorter tree under taller
-    rx, ry = ry, rx if @rank[rx] < @rank[ry]
-    @parent[ry] = rx
-    @rank[rx] += 1 if @rank[rx] == @rank[ry]
-    @count -= 1
-    true
-  end
+    // Union by rank — attach shorter tree under taller
+    if (this.rank[rx] < this.rank[ry]) [rx, ry] = [ry, rx];
+    this.parent[ry] = rx;
+    if (this.rank[rx] === this.rank[ry]) this.rank[rx] += 1;
+    this.count -= 1;
+    return true;
+  }
 
-  def connected?(x, y)
-    find(x) == find(y)
-  end
-end
+  connected(x: number, y: number): boolean {
+    return this.find(x) === this.find(y);
+  }
+}
 ```
 
 **Interview problems:** Number of Islands (alternative to DFS), Redundant Connection (cycle detection), Accounts Merge, Earliest Moment When Everyone Becomes Friends, Number of Provinces.
@@ -80,58 +84,58 @@ A monotonic stack maintains elements in strictly increasing or decreasing order.
 
 The key insight: each element is pushed and popped at most once, so despite the inner while loop, total work is O(n).
 
-```ruby
-# Next Greater Element: for each element, find the first larger element to its right
-def next_greater_elements(nums)
-  n = nums.length
-  result = Array.new(n, -1)
-  stack = []  # stores indices, monotonically decreasing values
+```typescript
+// Next Greater Element: for each element, find the first larger element to its right
+function nextGreaterElements(nums: number[]): number[] {
+  const n = nums.length;
+  const result = new Array(n).fill(-1);
+  const stack: number[] = []; // stores indices, monotonically decreasing values
 
-  (0...n).each do |i|
-    while !stack.empty? && nums[stack.last] < nums[i]
-      result[stack.pop] = nums[i]
-    end
-    stack.push(i)
-  end
-  result
-end
+  for (let i = 0; i < n; i++) {
+    while (stack.length > 0 && nums[stack[stack.length - 1]] < nums[i]) {
+      result[stack.pop()!] = nums[i];
+    }
+    stack.push(i);
+  }
+  return result;
+}
 
-# Largest Rectangle in Histogram — classic monotonic stack problem
-def largest_rectangle_area(heights)
-  stack = []  # indices of increasing heights
-  max_area = 0
+// Largest Rectangle in Histogram — classic monotonic stack problem
+function largestRectangleArea(heights: number[]): number {
+  const stack: number[] = []; // indices of increasing heights
+  let maxArea = 0;
 
-  (0..heights.length).each do |i|
-    h = i == heights.length ? 0 : heights[i]
-    while !stack.empty? && heights[stack.last] > h
-      height = heights[stack.pop]
-      width = stack.empty? ? i : i - stack.last - 1
-      max_area = [max_area, height * width].max
-    end
-    stack.push(i)
-  end
-  max_area
-end
+  for (let i = 0; i <= heights.length; i++) {
+    const h = i === heights.length ? 0 : heights[i];
+    while (stack.length > 0 && heights[stack[stack.length - 1]] > h) {
+      const height = heights[stack.pop()!];
+      const width = stack.length === 0 ? i : i - stack[stack.length - 1] - 1;
+      maxArea = Math.max(maxArea, height * width);
+    }
+    stack.push(i);
+  }
+  return maxArea;
+}
 ```
 
 **Monotonic Queue** extends this pattern for sliding window problems. Use a deque where the front always holds the current window's max/min.
 
-```ruby
-# Sliding Window Maximum — O(n) with monotonic deque
-def max_sliding_window(nums, k)
-  deque = []  # stores indices, values are monotonically decreasing
-  result = []
+```typescript
+// Sliding Window Maximum — O(n) with monotonic deque
+function maxSlidingWindow(nums: number[], k: number): number[] {
+  const deque: number[] = []; // stores indices, values are monotonically decreasing
+  const result: number[] = [];
 
-  nums.each_with_index do |num, i|
-    # Remove elements outside the window
-    deque.shift if !deque.empty? && deque.first <= i - k
-    # Maintain decreasing order
-    deque.pop while !deque.empty? && nums[deque.last] <= num
-    deque.push(i)
-    result << nums[deque.first] if i >= k - 1
-  end
-  result
-end
+  for (let i = 0; i < nums.length; i++) {
+    // Remove elements outside the window
+    if (deque.length > 0 && deque[0] <= i - k) deque.shift();
+    // Maintain decreasing order
+    while (deque.length > 0 && nums[deque[deque.length - 1]] <= nums[i]) deque.pop();
+    deque.push(i);
+    if (i >= k - 1) result.push(nums[deque[0]]);
+  }
+  return result;
+}
 ```
 
 **Interview problems:** Daily Temperatures, Trapping Rain Water, Sliding Window Maximum, Stock Span, Sum of Subarray Minimums.
@@ -156,64 +160,77 @@ graph LR
     style TAIL fill:#555,color:#fff
 ```
 
-```ruby
-class LRUCache
-  Node = Struct.new(:key, :val, :prev, :next)
+```typescript
+class LRUNode {
+  key: number;
+  val: number;
+  prev: LRUNode | null = null;
+  next: LRUNode | null = null;
 
-  def initialize(capacity)
-    @cap = capacity
-    @map = {}
-    @head = Node.new  # dummy head (most recent side)
-    @tail = Node.new  # dummy tail (least recent side)
-    @head.next = @tail
-    @tail.prev = @head
-  end
+  constructor(key = 0, val = 0) {
+    this.key = key;
+    this.val = val;
+  }
+}
 
-  def get(key)
-    return -1 unless @map.key?(key)
-    node = @map[key]
-    move_to_front(node)
-    node.val
-  end
+class LRUCache {
+  private cap: number;
+  private map: Map<number, LRUNode>;
+  private head: LRUNode; // dummy head (most recent side)
+  private tail: LRUNode; // dummy tail (least recent side)
 
-  def put(key, value)
-    if @map.key?(key)
-      node = @map[key]
-      node.val = value
-      move_to_front(node)
-    else
-      evict if @map.size >= @cap
-      node = Node.new(key, value)
-      @map[key] = node
-      add_to_front(node)
-    end
-  end
+  constructor(capacity: number) {
+    this.cap = capacity;
+    this.map = new Map();
+    this.head = new LRUNode();
+    this.tail = new LRUNode();
+    this.head.next = this.tail;
+    this.tail.prev = this.head;
+  }
 
-  private
+  get(key: number): number {
+    if (!this.map.has(key)) return -1;
+    const node = this.map.get(key)!;
+    this.moveToFront(node);
+    return node.val;
+  }
 
-  def add_to_front(node)
-    node.next = @head.next
-    node.prev = @head
-    @head.next.prev = node
-    @head.next = node
-  end
+  put(key: number, value: number): void {
+    if (this.map.has(key)) {
+      const node = this.map.get(key)!;
+      node.val = value;
+      this.moveToFront(node);
+    } else {
+      if (this.map.size >= this.cap) this.evict();
+      const node = new LRUNode(key, value);
+      this.map.set(key, node);
+      this.addToFront(node);
+    }
+  }
 
-  def remove(node)
-    node.prev.next = node.next
-    node.next.prev = node.prev
-  end
+  private addToFront(node: LRUNode): void {
+    node.next = this.head.next;
+    node.prev = this.head;
+    this.head.next!.prev = node;
+    this.head.next = node;
+  }
 
-  def move_to_front(node)
-    remove(node)
-    add_to_front(node)
-  end
+  private remove(node: LRUNode): void {
+    node.prev!.next = node.next;
+    node.next!.prev = node.prev;
+  }
 
-  def evict
-    lru = @tail.prev
-    remove(lru)
-    @map.delete(lru.key)
-  end
-end
+  private moveToFront(node: LRUNode): void {
+    this.remove(node);
+    this.addToFront(node);
+  }
+
+  private evict(): void {
+    const lru = this.tail.prev!;
+    this.remove(lru);
+    this.map.delete(lru.key);
+  }
+}
 ```
 
 **Interview tip:** Interviewers love follow-ups: "What if this needs to be thread-safe?" (add a mutex around get/put), "What about TTL-based expiration?" (add timestamps, lazy eviction on access or background sweep), "LFU instead?" (add frequency counter + min-frequency tracking).
@@ -238,48 +255,49 @@ graph TD
     style N3 fill:#7ab648,color:#fff
 ```
 
-```ruby
-class SegmentTree
-  def initialize(arr)
-    @n = arr.length
-    @tree = Array.new(4 * @n, 0)
-    build(arr, 1, 0, @n - 1)
-  end
+```typescript
+class SegmentTree {
+  private n: number;
+  private tree: number[];
 
-  def update(idx, val, node = 1, lo = 0, hi = @n - 1)
-    if lo == hi
-      @tree[node] = val
-      return
-    end
-    mid = (lo + hi) / 2
-    if idx <= mid
-      update(idx, val, 2 * node, lo, mid)
-    else
-      update(idx, val, 2 * node + 1, mid + 1, hi)
-    end
-    @tree[node] = @tree[2 * node] + @tree[2 * node + 1]
-  end
+  constructor(arr: number[]) {
+    this.n = arr.length;
+    this.tree = new Array(4 * this.n).fill(0);
+    this.build(arr, 1, 0, this.n - 1);
+  }
 
-  def query(ql, qr, node = 1, lo = 0, hi = @n - 1)
-    return 0 if ql > hi || qr < lo          # no overlap
-    return @tree[node] if ql <= lo && hi <= qr  # total overlap
-    mid = (lo + hi) / 2
-    query(ql, qr, 2 * node, lo, mid) + query(ql, qr, 2 * node + 1, mid + 1, hi)
-  end
+  update(idx: number, val: number, node = 1, lo = 0, hi = this.n - 1): void {
+    if (lo === hi) {
+      this.tree[node] = val;
+      return;
+    }
+    const mid = Math.floor((lo + hi) / 2);
+    if (idx <= mid) {
+      this.update(idx, val, 2 * node, lo, mid);
+    } else {
+      this.update(idx, val, 2 * node + 1, mid + 1, hi);
+    }
+    this.tree[node] = this.tree[2 * node] + this.tree[2 * node + 1];
+  }
 
-  private
+  query(ql: number, qr: number, node = 1, lo = 0, hi = this.n - 1): number {
+    if (ql > hi || qr < lo) return 0;          // no overlap
+    if (ql <= lo && hi <= qr) return this.tree[node]; // total overlap
+    const mid = Math.floor((lo + hi) / 2);
+    return this.query(ql, qr, 2 * node, lo, mid) + this.query(ql, qr, 2 * node + 1, mid + 1, hi);
+  }
 
-  def build(arr, node, lo, hi)
-    if lo == hi
-      @tree[node] = arr[lo]
-      return
-    end
-    mid = (lo + hi) / 2
-    build(arr, 2 * node, lo, mid)
-    build(arr, 2 * node + 1, mid + 1, hi)
-    @tree[node] = @tree[2 * node] + @tree[2 * node + 1]
-  end
-end
+  private build(arr: number[], node: number, lo: number, hi: number): void {
+    if (lo === hi) {
+      this.tree[node] = arr[lo];
+      return;
+    }
+    const mid = Math.floor((lo + hi) / 2);
+    this.build(arr, 2 * node, lo, mid);
+    this.build(arr, 2 * node + 1, mid + 1, hi);
+    this.tree[node] = this.tree[2 * node] + this.tree[2 * node + 1];
+  }
+}
 ```
 
 **When to use Segment Tree vs Fenwick Tree:** Fenwick trees (BIT) are simpler and use less memory, but only handle prefix-based operations. Segment trees are more flexible — they support arbitrary range queries, lazy propagation for range updates, and can be adapted for min/max queries. If the problem is just prefix sums with point updates, use Fenwick. Otherwise, segment tree.
@@ -290,35 +308,38 @@ end
 
 A Fenwick tree supports prefix sum queries and point updates in O(log n) with minimal code. It exploits the binary representation of indices — each index is responsible for a range determined by its lowest set bit.
 
-```ruby
-class FenwickTree
-  def initialize(n)
-    @n = n
-    @tree = Array.new(n + 1, 0)  # 1-indexed
-  end
+```typescript
+class FenwickTree {
+  private n: number;
+  private tree: number[];
 
-  def update(i, delta)
-    i += 1  # convert to 1-indexed
-    while i <= @n
-      @tree[i] += delta
-      i += i & (-i)  # add lowest set bit
-    end
-  end
+  constructor(n: number) {
+    this.n = n;
+    this.tree = new Array(n + 1).fill(0); // 1-indexed
+  }
 
-  def prefix_sum(i)
-    i += 1  # convert to 1-indexed
-    sum = 0
-    while i > 0
-      sum += @tree[i]
-      i -= i & (-i)  # remove lowest set bit
-    end
-    sum
-  end
+  update(i: number, delta: number): void {
+    i += 1; // convert to 1-indexed
+    while (i <= this.n) {
+      this.tree[i] += delta;
+      i += i & -i; // add lowest set bit
+    }
+  }
 
-  def range_sum(l, r)
-    l.zero? ? prefix_sum(r) : prefix_sum(r) - prefix_sum(l - 1)
-  end
-end
+  prefixSum(i: number): number {
+    i += 1; // convert to 1-indexed
+    let sum = 0;
+    while (i > 0) {
+      sum += this.tree[i];
+      i -= i & -i; // remove lowest set bit
+    }
+    return sum;
+  }
+
+  rangeSum(l: number, r: number): number {
+    return l === 0 ? this.prefixSum(r) : this.prefixSum(r) - this.prefixSum(l - 1);
+  }
+}
 ```
 
 **Interview problems:** Count of Smaller Numbers After Self, Range Sum Query (Mutable), Count Inversions.
@@ -331,32 +352,35 @@ A Bloom filter is a space-efficient probabilistic data structure that tests whet
 
 **False positive rate:** approximately (1 - e^(-kn/m))^k where n is the number of inserted elements.
 
-```ruby
-require 'digest'
+```typescript
+import { createHash } from "crypto";
 
-class BloomFilter
-  def initialize(size, num_hashes)
-    @size = size
-    @num_hashes = num_hashes
-    @bits = Array.new(size, false)
-  end
+class BloomFilter {
+  private size: number;
+  private numHashes: number;
+  private bits: boolean[];
 
-  def add(item)
-    hash_indices(item).each { |i| @bits[i] = true }
-  end
+  constructor(size: number, numHashes: number) {
+    this.size = size;
+    this.numHashes = numHashes;
+    this.bits = new Array(size).fill(false);
+  }
 
-  def possibly_contains?(item)
-    hash_indices(item).all? { |i| @bits[i] }
-  end
+  add(item: string): void {
+    for (const i of this.hashIndices(item)) this.bits[i] = true;
+  }
 
-  private
+  possiblyContains(item: string): boolean {
+    return this.hashIndices(item).every((i) => this.bits[i]);
+  }
 
-  def hash_indices(item)
-    (0...@num_hashes).map do |i|
-      Digest::MD5.hexdigest("#{i}:#{item}").to_i(16) % @size
-    end
-  end
-end
+  private hashIndices(item: string): number[] {
+    return Array.from({ length: this.numHashes }, (_, i) => {
+      const hex = createHash("md5").update(`${i}:${item}`).digest("hex");
+      return Number(BigInt("0x" + hex) % BigInt(this.size));
+    });
+  }
+}
 ```
 
 **Production uses:** Cassandra uses Bloom filters to avoid unnecessary disk reads. Chrome used one for malicious URL detection. Redis has built-in Bloom filter support via RedisBloom. Any "check before expensive lookup" scenario is a candidate.

@@ -32,20 +32,25 @@ graph TD
 
 Without memoization, fib(5) makes 15 calls. With memoization, only 6 unique calls. The savings grow exponentially.
 
-```ruby
-# Top-down: natural recursive thinking + cache
-def fib_memo(n, memo = {})
-  return n if n <= 1
-  memo[n] ||= fib_memo(n - 1, memo) + fib_memo(n - 2, memo)
-end
+```typescript
+// Top-down: natural recursive thinking + cache
+function fibMemo(n: number, memo: Map<number, number> = new Map()): number {
+  if (n <= 1) return n;
+  if (memo.has(n)) return memo.get(n)!;
+  const result = fibMemo(n - 1, memo) + fibMemo(n - 2, memo);
+  memo.set(n, result);
+  return result;
+}
 
-# Bottom-up: iterative, O(1) space with rolling variables
-def fib_bottom_up(n)
-  return n if n <= 1
-  a, b = 0, 1
-  (2..n).each { a, b = b, a + b }
-  b
-end
+// Bottom-up: iterative, O(1) space with rolling variables
+function fibBottomUp(n: number): number {
+  if (n <= 1) return n;
+  let [a, b] = [0, 1];
+  for (let i = 2; i <= n; i++) {
+    [a, b] = [b, a + b];
+  }
+  return b;
+}
 ```
 
 **Staff-level insight:** Start with top-down in interviews. It's faster to write and easier to reason about correctness. Optimize to bottom-up if the interviewer asks for space optimization or if recursion depth is a concern.
@@ -60,70 +65,72 @@ The simplest DP family. State is a single variable (usually an index or amount).
 
 **State:** `dp[i]` = number of ways to reach step i. **Recurrence:** `dp[i] = dp[i-1] + dp[i-2]`.
 
-```ruby
-def climb_stairs(n)
-  return 1 if n <= 1
-  a, b = 1, 1
-  (2..n).each { a, b = b, a + b }
-  b
-end
+```typescript
+function climbStairs(n: number): number {
+  if (n <= 1) return 1;
+  let [a, b] = [1, 1];
+  for (let i = 2; i <= n; i++) {
+    [a, b] = [b, a + b];
+  }
+  return b;
+}
 ```
 
 ### House Robber
 
 Can't rob adjacent houses. **State:** `dp[i]` = max money robbing houses 0..i. **Recurrence:** `dp[i] = max(dp[i-1], dp[i-2] + nums[i])` — skip this house or rob it.
 
-```ruby
-def rob(nums)
-  return 0 if nums.empty?
-  prev2, prev1 = 0, 0
-  nums.each do |n|
-    prev2, prev1 = prev1, [prev1, prev2 + n].max
-  end
-  prev1
-end
+```typescript
+function rob(nums: number[]): number {
+  if (nums.length === 0) return 0;
+  let [prev2, prev1] = [0, 0];
+  for (const n of nums) {
+    [prev2, prev1] = [prev1, Math.max(prev1, prev2 + n)];
+  }
+  return prev1;
+}
 ```
 
 ### Word Break
 
 **State:** `dp[i]` = can we segment `s[0...i]` into dictionary words? **Recurrence:** `dp[i] = true` if any `dp[j]` is true and `s[j...i]` is in the dictionary.
 
-```ruby
-def word_break(s, word_dict)
-  words = word_dict.to_set
-  dp = Array.new(s.length + 1, false)
-  dp[0] = true
+```typescript
+function wordBreak(s: string, wordDict: string[]): boolean {
+  const words = new Set(wordDict);
+  const dp = new Array(s.length + 1).fill(false);
+  dp[0] = true;
 
-  (1..s.length).each do |i|
-    (0...i).each do |j|
-      if dp[j] && words.include?(s[j...i])
-        dp[i] = true
-        break
-      end
-    end
-  end
-  dp[s.length]
-end
+  for (let i = 1; i <= s.length; i++) {
+    for (let j = 0; j < i; j++) {
+      if (dp[j] && words.has(s.slice(j, i))) {
+        dp[i] = true;
+        break;
+      }
+    }
+  }
+  return dp[s.length];
+}
 ```
 
 ### Decode Ways
 
 **State:** `dp[i]` = number of ways to decode `s[0...i]`. A digit can be decoded alone (1-9) or as a pair (10-26).
 
-```ruby
-def num_decodings(s)
-  return 0 if s.empty? || s[0] == '0'
-  prev2, prev1 = 1, 1
+```typescript
+function numDecodings(s: string): number {
+  if (s.length === 0 || s[0] === '0') return 0;
+  let [prev2, prev1] = [1, 1];
 
-  (1...s.length).each do |i|
-    current = 0
-    current += prev1 if s[i] != '0'                          # single digit
-    two = s[i - 1..i].to_i
-    current += prev2 if two >= 10 && two <= 26               # two digits
-    prev2, prev1 = prev1, current
-  end
-  prev1
-end
+  for (let i = 1; i < s.length; i++) {
+    let current = 0;
+    if (s[i] !== '0') current += prev1;                        // single digit
+    const two = parseInt(s.slice(i - 1, i + 1));
+    if (two >= 10 && two <= 26) current += prev2;              // two digits
+    [prev2, prev1] = [prev1, current];
+  }
+  return prev1;
+}
 ```
 
 ---
@@ -161,68 +168,68 @@ graph TD
 
 **Answer: 3** (replace h→r, delete r, delete e)
 
-```ruby
-def min_distance(word1, word2)
-  m, n = word1.length, word2.length
-  dp = Array.new(m + 1) { Array.new(n + 1, 0) }
+```typescript
+function minDistance(word1: string, word2: string): number {
+  const m = word1.length, n = word2.length;
+  const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
 
-  # Base cases: transforming to/from empty string
-  (0..m).each { |i| dp[i][0] = i }
-  (0..n).each { |j| dp[0][j] = j }
+  // Base cases: transforming to/from empty string
+  for (let i = 0; i <= m; i++) dp[i][0] = i;
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
 
-  (1..m).each do |i|
-    (1..n).each do |j|
-      if word1[i - 1] == word2[j - 1]
-        dp[i][j] = dp[i - 1][j - 1]
-      else
-        dp[i][j] = 1 + [
-          dp[i - 1][j],      # delete from word1
-          dp[i][j - 1],      # insert into word1
-          dp[i - 1][j - 1]   # replace
-        ].min
-      end
-    end
-  end
-  dp[m][n]
-end
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (word1[i - 1] === word2[j - 1]) {
+        dp[i][j] = dp[i - 1][j - 1];
+      } else {
+        dp[i][j] = 1 + Math.min(
+          dp[i - 1][j],      // delete from word1
+          dp[i][j - 1],      // insert into word1
+          dp[i - 1][j - 1]   // replace
+        );
+      }
+    }
+  }
+  return dp[m][n];
+}
 ```
 
 ### Longest Common Subsequence (LCS)
 
 **State:** `dp[i][j]` = length of LCS of `text1[0...i]` and `text2[0...j]`.
 
-```ruby
-def longest_common_subsequence(text1, text2)
-  m, n = text1.length, text2.length
-  dp = Array.new(m + 1) { Array.new(n + 1, 0) }
+```typescript
+function longestCommonSubsequence(text1: string, text2: string): number {
+  const m = text1.length, n = text2.length;
+  const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
 
-  (1..m).each do |i|
-    (1..n).each do |j|
-      dp[i][j] = if text1[i - 1] == text2[j - 1]
-                   dp[i - 1][j - 1] + 1
-                 else
-                   [dp[i - 1][j], dp[i][j - 1]].max
-                 end
-    end
-  end
-  dp[m][n]
-end
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (text1[i - 1] === text2[j - 1]) {
+        dp[i][j] = dp[i - 1][j - 1] + 1;
+      } else {
+        dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+      }
+    }
+  }
+  return dp[m][n];
+}
 ```
 
 ### Unique Paths (Grid)
 
 **State:** `dp[r][c]` = number of ways to reach cell (r,c) from (0,0) moving only right or down.
 
-```ruby
-def unique_paths(m, n)
-  dp = Array.new(m) { Array.new(n, 1) }
-  (1...m).each do |r|
-    (1...n).each do |c|
-      dp[r][c] = dp[r - 1][c] + dp[r][c - 1]
-    end
-  end
-  dp[m - 1][n - 1]
-end
+```typescript
+function uniquePaths(m: number, n: number): number {
+  const dp = Array.from({ length: m }, () => new Array(n).fill(1));
+  for (let r = 1; r < m; r++) {
+    for (let c = 1; c < n; c++) {
+      dp[r][c] = dp[r - 1][c] + dp[r][c - 1];
+    }
+  }
+  return dp[m - 1][n - 1];
+}
 ```
 
 ---
@@ -235,59 +242,59 @@ String problems are a major DP subcategory. The pattern: define state around str
 
 **State:** `dp[i][j]` = true if `s[i..j]` is a palindrome. **Recurrence:** `dp[i][j] = (s[i] == s[j]) && dp[i+1][j-1]`.
 
-```ruby
-# Expand-around-center is simpler and faster for this specific problem
-def longest_palindrome(s)
-  return s if s.length <= 1
-  start, max_len = 0, 1
+```typescript
+// Expand-around-center is simpler and faster for this specific problem
+function longestPalindrome(s: string): string {
+  if (s.length <= 1) return s;
+  let start = 0, maxLen = 1;
 
-  expand = lambda do |l, r|
-    while l >= 0 && r < s.length && s[l] == s[r]
-      if r - l + 1 > max_len
-        start = l
-        max_len = r - l + 1
-      end
-      l -= 1
-      r += 1
-    end
-  end
+  const expand = (l: number, r: number): void => {
+    while (l >= 0 && r < s.length && s[l] === s[r]) {
+      if (r - l + 1 > maxLen) {
+        start = l;
+        maxLen = r - l + 1;
+      }
+      l--;
+      r++;
+    }
+  };
 
-  (0...s.length).each do |i|
-    expand.call(i, i)       # odd-length palindromes
-    expand.call(i, i + 1)   # even-length palindromes
-  end
-  s[start, max_len]
-end
+  for (let i = 0; i < s.length; i++) {
+    expand(i, i);         // odd-length palindromes
+    expand(i, i + 1);     // even-length palindromes
+  }
+  return s.slice(start, start + maxLen);
+}
 ```
 
 ### Palindrome Partitioning (Minimum Cuts)
 
 **State:** `dp[i]` = min cuts to partition `s[0...i]` into palindromes.
 
-```ruby
-def min_cut(s)
-  n = s.length
-  # Precompute palindrome table
-  is_pal = Array.new(n) { Array.new(n, false) }
-  (0...n).each { |i| is_pal[i][i] = true }
-  (n - 1).downto(0) do |i|
-    (i + 1...n).each do |j|
-      is_pal[i][j] = s[i] == s[j] && (j - i < 3 || is_pal[i + 1][j - 1])
-    end
-  end
+```typescript
+function minCut(s: string): number {
+  const n = s.length;
+  // Precompute palindrome table
+  const isPal = Array.from({ length: n }, () => new Array(n).fill(false));
+  for (let i = 0; i < n; i++) isPal[i][i] = true;
+  for (let i = n - 1; i >= 0; i--) {
+    for (let j = i + 1; j < n; j++) {
+      isPal[i][j] = s[i] === s[j] && (j - i < 3 || isPal[i + 1][j - 1]);
+    }
+  }
 
-  dp = Array.new(n, Float::INFINITY)
-  (0...n).each do |i|
-    if is_pal[0][i]
-      dp[i] = 0
-    else
-      (1..i).each do |j|
-        dp[i] = [dp[i], dp[j - 1] + 1].min if is_pal[j][i]
-      end
-    end
-  end
-  dp[n - 1]
-end
+  const dp = new Array(n).fill(Infinity);
+  for (let i = 0; i < n; i++) {
+    if (isPal[0][i]) {
+      dp[i] = 0;
+    } else {
+      for (let j = 1; j <= i; j++) {
+        if (isPal[j][i]) dp[i] = Math.min(dp[i], dp[j - 1] + 1);
+      }
+    }
+  }
+  return dp[n - 1];
+}
 ```
 
 ---
@@ -314,50 +321,50 @@ graph TD
     style C fill:#2ecc71,color:#fff
 ```
 
-```ruby
-# Space-optimized 1D approach
-def knapsack(weights, values, capacity)
-  dp = Array.new(capacity + 1, 0)
+```typescript
+// Space-optimized 1D approach
+function knapsack(weights: number[], values: number[], capacity: number): number {
+  const dp = new Array(capacity + 1).fill(0);
 
-  weights.each_with_index do |w, i|
-    capacity.downto(w) do |c|  # reverse to avoid using same item twice
-      dp[c] = [dp[c], dp[c - w] + values[i]].max
-    end
-  end
-  dp[capacity]
-end
+  for (let i = 0; i < weights.length; i++) {
+    for (let c = capacity; c >= weights[i]; c--) {  // reverse to avoid using same item twice
+      dp[c] = Math.max(dp[c], dp[c - weights[i]] + values[i]);
+    }
+  }
+  return dp[capacity];
+}
 ```
 
 ### Unbounded Knapsack (Coin Change)
 
 Each item can be used unlimited times. Only difference: iterate capacity forward instead of backward.
 
-```ruby
-# Minimum coins to make amount
-def coin_change(coins, amount)
-  dp = Array.new(amount + 1, Float::INFINITY)
-  dp[0] = 0
+```typescript
+// Minimum coins to make amount
+function coinChange(coins: number[], amount: number): number {
+  const dp = new Array(amount + 1).fill(Infinity);
+  dp[0] = 0;
 
-  (1..amount).each do |a|
-    coins.each do |coin|
-      dp[a] = [dp[a], dp[a - coin] + 1].min if coin <= a
-    end
-  end
-  dp[amount] == Float::INFINITY ? -1 : dp[amount]
-end
+  for (let a = 1; a <= amount; a++) {
+    for (const coin of coins) {
+      if (coin <= a) dp[a] = Math.min(dp[a], dp[a - coin] + 1);
+    }
+  }
+  return dp[amount] === Infinity ? -1 : dp[amount];
+}
 
-# Number of ways to make amount (order doesn't matter)
-def coin_change_ways(coins, amount)
-  dp = Array.new(amount + 1, 0)
-  dp[0] = 1
+// Number of ways to make amount (order doesn't matter)
+function coinChangeWays(coins: number[], amount: number): number {
+  const dp = new Array(amount + 1).fill(0);
+  dp[0] = 1;
 
-  coins.each do |coin|           # outer loop on coins = combinations
-    (coin..amount).each do |a|   # inner loop on amount
-      dp[a] += dp[a - coin]
-    end
-  end
-  dp[amount]
-end
+  for (const coin of coins) {           // outer loop on coins = combinations
+    for (let a = coin; a <= amount; a++) {  // inner loop on amount
+      dp[a] += dp[a - coin];
+    }
+  }
+  return dp[amount];
+}
 ```
 
 **Gotcha:** Swapping the loop order (amount outer, coins inner) counts permutations instead of combinations. Interviewers love this follow-up.
@@ -366,45 +373,45 @@ end
 
 Reduce to 0/1 knapsack: can we select items that sum to exactly `target`?
 
-```ruby
-def can_partition(nums)
-  total = nums.sum
-  return false if total.odd?
-  target = total / 2
+```typescript
+function canPartition(nums: number[]): boolean {
+  const total = nums.reduce((a, b) => a + b, 0);
+  if (total % 2 !== 0) return false;
+  const target = total / 2;
 
-  dp = Array.new(target + 1, false)
-  dp[0] = true
+  const dp = new Array(target + 1).fill(false);
+  dp[0] = true;
 
-  nums.each do |num|
-    target.downto(num) do |t|
-      dp[t] = true if dp[t - num]
-    end
-  end
-  dp[target]
-end
+  for (const num of nums) {
+    for (let t = target; t >= num; t--) {
+      if (dp[t - num]) dp[t] = true;
+    }
+  }
+  return dp[target];
+}
 ```
 
 ### Target Sum
 
 Assign + or - to each number to reach target. Reduces to subset sum: find subset with sum `(total + target) / 2`.
 
-```ruby
-def find_target_sum_ways(nums, target)
-  total = nums.sum
-  return 0 if (total + target).odd? || (total + target).abs < target.abs
-  sum = (total + target) / 2
-  return 0 if sum < 0
+```typescript
+function findTargetSumWays(nums: number[], target: number): number {
+  const total = nums.reduce((a, b) => a + b, 0);
+  if ((total + target) % 2 !== 0 || Math.abs(total + target) < Math.abs(target)) return 0;
+  const sum = (total + target) / 2;
+  if (sum < 0) return 0;
 
-  dp = Array.new(sum + 1, 0)
-  dp[0] = 1
+  const dp = new Array(sum + 1).fill(0);
+  dp[0] = 1;
 
-  nums.each do |num|
-    sum.downto(num) do |s|
-      dp[s] += dp[s - num]
-    end
-  end
-  dp[sum]
-end
+  for (const num of nums) {
+    for (let s = sum; s >= num; s--) {
+      dp[s] += dp[s - num];
+    }
+  }
+  return dp[sum];
+}
 ```
 
 ---
@@ -419,26 +426,26 @@ The state represents a subarray/interval `[i, j]` and you try all possible split
 
 **Key insight:** Think about which balloon you pop **last** in each interval, not first. The last balloon popped in interval [i,j] determines the subproblems.
 
-```ruby
-def max_coins(nums)
-  nums = [1] + nums + [1]  # add boundary balloons
-  n = nums.length
-  dp = Array.new(n) { Array.new(n, 0) }
+```typescript
+function maxCoins(nums: number[]): number {
+  nums = [1, ...nums, 1];  // add boundary balloons
+  const n = nums.length;
+  const dp = Array.from({ length: n }, () => new Array(n).fill(0));
 
-  # length of interval
-  (2...n).each do |length|
-    (0...(n - length)).each do |i|
-      j = i + length
-      (i + 1...j).each do |k|  # k = last balloon popped in (i,j)
-        dp[i][j] = [
+  // length of interval
+  for (let length = 2; length < n; length++) {
+    for (let i = 0; i < n - length; i++) {
+      const j = i + length;
+      for (let k = i + 1; k < j; k++) {  // k = last balloon popped in (i,j)
+        dp[i][j] = Math.max(
           dp[i][j],
           dp[i][k] + dp[k][j] + nums[i] * nums[k] * nums[j]
-        ].max
-      end
-    end
-  end
-  dp[0][n - 1]
-end
+        );
+      }
+    }
+  }
+  return dp[0][n - 1];
+}
 ```
 
 ---
@@ -451,45 +458,46 @@ State is defined per tree node. Solve subtrees first, then combine. Always think
 
 Can't rob directly connected parent-child pairs. For each node, track two states: max when robbing this node vs skipping it.
 
-```ruby
-def rob_tree(root)
-  dfs(root).max
-end
+```typescript
+interface TreeNode { val: number; left: TreeNode | null; right: TreeNode | null; }
 
-# Returns [rob_this_node, skip_this_node]
-def dfs(node)
-  return [0, 0] unless node
+function robTree(root: TreeNode | null): number {
+  const dfs = (node: TreeNode | null): [number, number] => {
+    if (!node) return [0, 0];
 
-  left = dfs(node.left)
-  right = dfs(node.right)
+    const left = dfs(node.left);
+    const right = dfs(node.right);
 
-  rob = node.val + left[1] + right[1]       # rob this node, must skip children
-  skip = left.max + right.max               # skip this node, free to rob or skip children
-  [rob, skip]
-end
+    const rob = node.val + left[1] + right[1];           // rob this node, must skip children
+    const skip = Math.max(...left) + Math.max(...right);  // skip this node, free to rob or skip children
+    return [rob, skip];
+  };
+
+  return Math.max(...dfs(root));
+}
 ```
 
 ### Binary Tree Maximum Path Sum
 
 A path can start and end at any nodes. For each node, compute the max path that passes through it, but only return the max single-branch contribution upward.
 
-```ruby
-def max_path_sum(root)
-  @max = -Float::INFINITY
+```typescript
+function maxPathSum(root: TreeNode | null): number {
+  let maxSum = -Infinity;
 
-  dfs = lambda do |node|
-    return 0 unless node
+  const dfs = (node: TreeNode | null): number => {
+    if (!node) return 0;
 
-    left = [dfs.call(node.left), 0].max    # ignore negative branches
-    right = [dfs.call(node.right), 0].max
+    const left = Math.max(dfs(node.left), 0);    // ignore negative branches
+    const right = Math.max(dfs(node.right), 0);
 
-    @max = [@max, left + node.val + right].max  # path through this node
-    node.val + [left, right].max                # best single branch upward
-  end
+    maxSum = Math.max(maxSum, left + node.val + right);  // path through this node
+    return node.val + Math.max(left, right);             // best single branch upward
+  };
 
-  dfs.call(root)
-  @max
-end
+  dfs(root);
+  return maxSum;
+}
 ```
 
 ---
@@ -512,57 +520,57 @@ stateDiagram-v2
     Cooldown --> NotHolding: Wait 1 day
 ```
 
-```ruby
-# Single transaction (one buy, one sell)
-def max_profit_one(prices)
-  min_price = Float::INFINITY
-  max_profit = 0
-  prices.each do |price|
-    min_price = [min_price, price].min
-    max_profit = [max_profit, price - min_price].max
-  end
-  max_profit
-end
+```typescript
+// Single transaction (one buy, one sell)
+function maxProfitOne(prices: number[]): number {
+  let minPrice = Infinity;
+  let maxProfit = 0;
+  for (const price of prices) {
+    minPrice = Math.min(minPrice, price);
+    maxProfit = Math.max(maxProfit, price - minPrice);
+  }
+  return maxProfit;
+}
 
-# Unlimited transactions
-def max_profit_unlimited(prices)
-  prices.each_cons(2).sum { |a, b| [b - a, 0].max }
-end
+// Unlimited transactions
+function maxProfitUnlimited(prices: number[]): number {
+  return prices.slice(1).reduce((sum, b, i) => sum + Math.max(b - prices[i], 0), 0);
+}
 
-# With cooldown (must wait 1 day after selling)
-def max_profit_cooldown(prices)
-  return 0 if prices.length < 2
-  held = -prices[0]      # holding stock
-  sold = 0               # just sold (entering cooldown)
-  rest = 0               # not holding, free to buy
+// With cooldown (must wait 1 day after selling)
+function maxProfitCooldown(prices: number[]): number {
+  if (prices.length < 2) return 0;
+  let held = -prices[0];      // holding stock
+  let sold = 0;               // just sold (entering cooldown)
+  let rest = 0;               // not holding, free to buy
 
-  prices[1..].each do |price|
-    prev_held, prev_sold, prev_rest = held, sold, rest
-    held = [prev_held, prev_rest - price].max     # keep holding or buy
-    sold = prev_held + price                       # sell today
-    rest = [prev_rest, prev_sold].max              # stay resting or exit cooldown
-  end
-  [sold, rest].max
-end
+  for (const price of prices.slice(1)) {
+    const [prevHeld, prevSold, prevRest] = [held, sold, rest];
+    held = Math.max(prevHeld, prevRest - price);     // keep holding or buy
+    sold = prevHeld + price;                          // sell today
+    rest = Math.max(prevRest, prevSold);              // stay resting or exit cooldown
+  }
+  return Math.max(sold, rest);
+}
 
-# At most K transactions
-def max_profit_k(prices, k)
-  return 0 if prices.empty? || k == 0
-  n = prices.length
-  return max_profit_unlimited(prices) if k >= n / 2
+// At most K transactions
+function maxProfitK(prices: number[], k: number): number {
+  if (prices.length === 0 || k === 0) return 0;
+  const n = prices.length;
+  if (k >= Math.floor(n / 2)) return maxProfitUnlimited(prices);
 
-  # dp[t][0] = max profit with t transactions, not holding
-  # dp[t][1] = max profit with t transactions, holding
-  dp = Array.new(k + 1) { [0, -Float::INFINITY] }
+  // dp[t][0] = max profit with t transactions, not holding
+  // dp[t][1] = max profit with t transactions, holding
+  const dp: [number, number][] = Array.from({ length: k + 1 }, () => [0, -Infinity]);
 
-  prices.each do |price|
-    (1..k).each do |t|
-      dp[t][0] = [dp[t][0], dp[t][1] + price].max      # sell
-      dp[t][1] = [dp[t][1], dp[t - 1][0] - price].max  # buy (uses one transaction)
-    end
-  end
-  dp[k][0]
-end
+  for (const price of prices) {
+    for (let t = 1; t <= k; t++) {
+      dp[t][0] = Math.max(dp[t][0], dp[t][1] + price);      // sell
+      dp[t][1] = Math.max(dp[t][1], dp[t - 1][0] - price);  // buy (uses one transaction)
+    }
+  }
+  return dp[k][0];
+}
 ```
 
 ---
@@ -577,29 +585,33 @@ Visit all cities exactly once and return to start, minimizing total distance.
 
 **State:** `dp[mask][i]` = min cost to visit all cities in `mask`, ending at city `i`.
 
-```ruby
-def tsp(dist)
-  n = dist.length
-  full_mask = (1 << n) - 1
-  dp = Array.new(1 << n) { Array.new(n, Float::INFINITY) }
-  dp[1][0] = 0  # start at city 0
+```typescript
+function tsp(dist: number[][]): number {
+  const n = dist.length;
+  const fullMask = (1 << n) - 1;
+  const dp = Array.from({ length: 1 << n }, () => new Array(n).fill(Infinity));
+  dp[1][0] = 0;  // start at city 0
 
-  (1...1 << n).each do |mask|
-    (0...n).each do |u|
-      next if dp[mask][u] == Float::INFINITY
-      next unless mask & (1 << u) != 0  # u must be in mask
+  for (let mask = 1; mask < 1 << n; mask++) {
+    for (let u = 0; u < n; u++) {
+      if (dp[mask][u] === Infinity) continue;
+      if ((mask & (1 << u)) === 0) continue;  // u must be in mask
 
-      (0...n).each do |v|
-        next if mask & (1 << v) != 0  # v must not be visited
-        new_mask = mask | (1 << v)
-        dp[new_mask][v] = [dp[new_mask][v], dp[mask][u] + dist[u][v]].min
-      end
-    end
-  end
+      for (let v = 0; v < n; v++) {
+        if ((mask & (1 << v)) !== 0) continue;  // v must not be visited
+        const newMask = mask | (1 << v);
+        dp[newMask][v] = Math.min(dp[newMask][v], dp[mask][u] + dist[u][v]);
+      }
+    }
+  }
 
-  # Return to start
-  (0...n).map { |i| dp[full_mask][i] + dist[i][0] }.min
-end
+  // Return to start
+  let min = Infinity;
+  for (let i = 0; i < n; i++) {
+    min = Math.min(min, dp[fullMask][i] + dist[i][0]);
+  }
+  return min;
+}
 ```
 
 **Interview tip:** Bitmask DP problems are rare in interviews but impressive when you recognize them. The telltale sign: a problem with n <= 15-20 items where you need to track which items have been used.
@@ -612,26 +624,26 @@ Most 2D DP can be optimized to O(n) space by keeping only the previous row, sinc
 
 ### Rolling Array Technique
 
-```ruby
-# Edit distance with O(n) space instead of O(m*n)
-def min_distance_optimized(word1, word2)
-  m, n = word1.length, word2.length
-  prev = (0..n).to_a
-  curr = Array.new(n + 1, 0)
+```typescript
+// Edit distance with O(n) space instead of O(m*n)
+function minDistanceOptimized(word1: string, word2: string): number {
+  const m = word1.length, n = word2.length;
+  let prev = Array.from({ length: n + 1 }, (_, i) => i);
+  let curr = new Array(n + 1).fill(0);
 
-  (1..m).each do |i|
-    curr[0] = i
-    (1..n).each do |j|
-      if word1[i - 1] == word2[j - 1]
-        curr[j] = prev[j - 1]
-      else
-        curr[j] = 1 + [prev[j], curr[j - 1], prev[j - 1]].min
-      end
-    end
-    prev, curr = curr, prev
-  end
-  prev[n]
-end
+  for (let i = 1; i <= m; i++) {
+    curr[0] = i;
+    for (let j = 1; j <= n; j++) {
+      if (word1[i - 1] === word2[j - 1]) {
+        curr[j] = prev[j - 1];
+      } else {
+        curr[j] = 1 + Math.min(prev[j], curr[j - 1], prev[j - 1]);
+      }
+    }
+    [prev, curr] = [curr, prev];
+  }
+  return prev[n];
+}
 ```
 
 **When to optimize:** In an interview, write the 2D version first for clarity, then offer the 1D optimization as a follow-up. Interviewers appreciate the progression from "correct" to "optimized."
