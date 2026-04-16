@@ -44,6 +44,10 @@ Deep dive into binary search (standard, rotated, bisect left/right, search on an
 
 The hardest pattern for most candidates, given its own comprehensive treatment. Covers all major DP families: 1D, 2D/grid, string, knapsack, interval, tree, bitmask, and state machine DP. Includes a recognition cheat sheet for identifying which pattern applies, mermaid diagrams for visualizing subproblem structure, and space optimization techniques.
 
+### 10. [[10-code-snippets/index|Code Snippets Catalog]] `reference`
+
+A cross-topic reference library of reusable, interview-ready implementations organized by language. Drop-in generic versions of heaps, union-find, tries, and other structures you need to reproduce under time pressure. Currently covers TypeScript; grows as new languages and snippets are added.
+
 ---
 
 ## How to Use This Bank
