@@ -95,6 +95,58 @@ Design a distributed cron-like system. Covers partitioned polling, consensus-bas
 
 **[[exercises/03-distributed-task-scheduler/WALKTHROUGH|Full walkthrough]]**
 
+### Shopify System Design Exercises
+
+Commerce-specific system design exercises modeled after Shopify's most frequently asked interview questions. Start with the **[[exercises/shopify-crash-course|Shopify Staff System Design Crash Course]]** for a self-contained guide to the architecture patterns, technology choices, and failure modes. The [[exercises/shopify-patterns|cross-cutting patterns and gotchas]] reference maps these patterns back to specific exercises.
+
+### [[exercises/04-shopify-checkout-system/PROMPT|Exercise 4: Checkout System (Shopify)]]
+
+Design a checkout system handling BFCM-scale traffic. Covers CartSink/CardServer PCI isolation, the Resumption pattern for exactly-once payments, cart-to-order state machines, and multi-provider failover with Semian circuit breakers.
+
+**[[exercises/04-shopify-checkout-system/WALKTHROUGH|Full walkthrough]]**
+
+### [[exercises/05-shopify-flash-sale-system/PROMPT|Exercise 5: Flash Sale / BFCM Traffic (Shopify)]]
+
+Design a system handling 284M req/min during flash sales. Covers pod-based scaling, Sorting Hat load shedding, storefront extraction, queue-based admission control, and pre-event preparation with Genghis load testing.
+
+**[[exercises/05-shopify-flash-sale-system/WALKTHROUGH|Full walkthrough]]**
+
+### [[exercises/06-shopify-inventory-management/PROMPT|Exercise 6: Inventory Management (Shopify)]]
+
+Design real-time inventory tracking across warehouses and channels. Covers reservation-based allocation with TTL, adaptive concurrency control (optimistic + pessimistic), cross-channel sync via Kafka, and oversell prevention under flash sale concurrency.
+
+**[[exercises/06-shopify-inventory-management/WALKTHROUGH|Full walkthrough]]**
+
+### [[exercises/07-shopify-multi-tenant-platform/PROMPT|Exercise 7: Multi-Tenant Platform (Shopify)]]
+
+Design pod-based multi-tenant architecture for millions of merchants. Covers database-per-pod sharding, Sorting Hat routing, Ghostferry zero-downtime migration, noisy neighbor prevention, and Packwerk module boundaries.
+
+**[[exercises/07-shopify-multi-tenant-platform/WALKTHROUGH|Full walkthrough]]**
+
+### [[exercises/08-shopify-webhook-delivery/PROMPT|Exercise 8: Webhook Delivery (Shopify)]]
+
+Design webhook delivery for thousands of third-party apps. Covers at-least-once delivery, Kafka-based event ingestion, per-endpoint queue isolation, HMAC signing, exponential backoff with jitter, and BFCM-scale fan-out.
+
+**[[exercises/08-shopify-webhook-delivery/WALKTHROUGH|Full walkthrough]]**
+
+### [[exercises/09-shopify-product-search/PROMPT|Exercise 9: Product Search (Shopify)]]
+
+Design multi-tenant product search with variant-aware indexing. Covers hybrid index isolation, CDC-based real-time updates, faceted search, merchant-customizable relevance boosting, autocomplete, and AI-powered discovery extensions.
+
+**[[exercises/09-shopify-product-search/WALKTHROUGH|Full walkthrough]]**
+
+### [[exercises/10-shopify-rate-limiting/PROMPT|Exercise 10: Rate Limiting (Shopify)]]
+
+Design cost-based rate limiting for a GraphQL API. Covers static query complexity analysis, leaky bucket with distributed Redis enforcement, fail-open policy, per-app per-merchant buckets, and local approximation for sub-ms latency.
+
+**[[exercises/10-shopify-rate-limiting/WALKTHROUGH|Full walkthrough]]**
+
+### [[exercises/11-shopify-payment-processing/PROMPT|Exercise 11: Payment Processing (Shopify)]]
+
+Design a PCI-compliant payment pipeline. Covers CardSink/CardServer tokenization, the Resumption pattern for exactly-once semantics, payment state machines, multi-gateway waterfall failover, and per-region Semian circuit breakers.
+
+**[[exercises/11-shopify-payment-processing/WALKTHROUGH|Full walkthrough]]**
+
 ---
 
 ## Resources
