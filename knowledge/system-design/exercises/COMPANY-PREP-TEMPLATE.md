@@ -2,7 +2,7 @@
 
 This template generates a complete staff-level system design knowledge bank for a target company. The output mirrors the existing Shopify (`exercises/shopify/`) and Coinbase (`exercises/coinbase/`) structure: 8 numbered exercise folders (`01-...` through `08-...`), each with `PROMPT.md` + `WALKTHROUGH.md`, plus a `patterns.md` and `crash-course.md` at the company-folder root.
 
-**Estimated total runtime:** 60-90 minutes wall clock, ~12-15 parallel agent invocations.
+**Estimated total runtime:** 60-90 minutes wall clock, ~12-15 parallel agent invocations. Output: 19 files (8 PROMPT + 8 WALKTHROUGH + patterns + crash-course + interview-playbook).
 
 **How to use:**
 1. Replace every `{{COMPANY}}` placeholder below with the target company name (lowercase, single word — `stripe`, `airbnb`, `anthropic`).
@@ -37,7 +37,8 @@ exercises/
 └── {{COMPANY}}/                          # what you'll create
     ├── 01-{slug}/{PROMPT,WALKTHROUGH}.md
     ├── ...08-{slug}/
-    ├── crash-course.md
+    ├── crash-course.md                   # reference material, read early
+    ├── interview-playbook.md             # delivery mechanics, read morning-of
     └── patterns.md
 ```
 
@@ -53,9 +54,15 @@ The {{COMPANY}} run should produce 18 files inside `exercises/{{COMPANY}}/`.
 
 ### Phase 0: Setup (do this immediately)
 
-1. Read the existing exemplar files listed above to absorb the structure and depth target.
-2. Use TaskCreate to set up tasks for each phase below.
-3. Create the company folder: `mkdir -p knowledge/system-design/exercises/{{COMPANY}}`. Exercise subdirs are created in Phase 3 once you've picked the 8 exercises.
+1. **Gather role and prompt context from the user before research.** Ask in one message:
+   - **Exact role title and sub-team** if known (e.g., "Staff SWE Backend, Consumer-Retail Cash" not just "Staff at {{COMPANY}}"). The sub-team biases which patterns matter — Coinbase Consumer-Retail Cash deemphasizes matching-engine internals; Coinbase Trading Infra would emphasize them.
+   - **Interview prompt language if known.** Many companies publish or candidates leak the literal prompt (e.g., Coinbase: "Design a zero-to-one system based on a real-life scenario"). The prompt's *shape* drives the playbook — "zero-to-one" → worked openings should target user-familiar systems (Venmo, Robinhood) not company-internal exotica.
+   - **Timeline.** Days vs. weeks matters. <1 week to interview means biasing late-phase output toward delivery mechanics over more architecture facts.
+   - **Already-completed adjacent prep** (Shopify, other companies) so you can call out contrasts.
+   If the user can't answer, proceed with sensible defaults but flag the assumption.
+2. Read the existing exemplar files listed above to absorb the structure and depth target.
+3. Use TaskCreate to set up tasks for each phase below.
+4. Create the company folder: `mkdir -p knowledge/system-design/exercises/{{COMPANY}}`. Exercise subdirs are created in Phase 3 once you've picked the 8 exercises.
 
 ### Phase 1: Parallel Research (4 agents concurrent)
 
@@ -161,21 +168,56 @@ Target length: 350-450 lines.
 
 ### Phase 6: Crash Course Document
 
-Write `knowledge/system-design/exercises/{{COMPANY}}/crash-course.md` mirroring `shopify/crash-course.md` / `coinbase/crash-course.md`. This is the master study guide.
+Write `knowledge/system-design/exercises/{{COMPANY}}/crash-course.md` mirroring `shopify/crash-course.md` / `coinbase/crash-course.md`. This is the reference study guide (read early, weeks before).
 
 Required sections:
-1. Opening — "How {{COMPANY}} Thinks About Architecture" (3 design constraints all decisions flow from)
+1. Opening — "How {{COMPANY}} Thinks About Architecture" (3 design constraints all decisions flow from). **Add a "role-specific lens" paragraph** if Phase 0 captured a sub-team — call out what to bias toward and what to deprioritize.
 2. The {{COMPANY}} Interview Loop (loop structure, bar-raiser equivalent, top rejection cause)
 3. Cultural Tenets That Show Up in Design Rounds (table mapping tenets → what they look like in interview)
-4. The Technology Stack (databases, queues/streaming, caching/edge, with capacity reference numbers as a table)
-5. Architecture Patterns (the 10-15 patterns from the patterns doc, expanded with "How to describe this problem" framing)
-6. Patterns for Specific Problem Domains (one section per major problem area: trading, custody, ledger, etc. — whatever maps to the 8 exercises)
-7. Common Mistakes That Fail Candidates (numbered list)
-8. {{COMPANY}}-Specific Vocabulary (compact tables grouped by domain)
-9. The 60-Second Mental Model (10 filters to run every design decision through)
-10. Related Resources (wikilinks to all 8 exercises + patterns doc + relevant talks/blog posts from research)
+4. **Domain primer (if applicable)** — "just enough X" for whatever specialized knowledge the company assumes (blockchain finality for Coinbase, payment rails for Stripe, LLM serving for Anthropic). 3 concepts max. Skip if the domain is generic web.
+5. The Technology Stack — **3 picks per layer, no more.** Each pick: what it gets you, what you pay (the cost). Lead with a "how to make tech decisions on the whiteboard" paragraph (4 short bullets). Capacity reference numbers as a table with **numbers bolded.**
+6. Architecture Patterns (10-15 patterns expanded with "How to describe this problem" framing). **Each pattern must have a cons / tradeoffs section** — what does this approach cost? Storage growth? Operational overhead? Latency?
+7. Patterns for Specific Problem Domains (one section per major problem area mapping to the 8 exercises). For each: 90-second framing line + bulleted decision points. **Mark which are role-priority** based on Phase 0 input (e.g., "*highest priority for this role*", "*know-the-shape*", "*very low priority*").
+8. Common Mistakes That Fail Candidates (numbered list, rank-ordered by frequency)
+9. {{COMPANY}}-Specific Vocabulary (compact tables grouped by domain)
+10. The 60-Second Mental Model (filters to run every design decision through)
+11. Related Resources (wikilinks to all 8 exercises + patterns doc + interview-playbook + ranked external watching/reading list ~5 hours)
 
-Target length: 600-800 lines. This is dense reference material — every paragraph earns its place.
+**Style discipline (do not skip — the Coinbase v1 generation broke all of these and required a full rewrite):**
+- **Mermaid diagrams, never ASCII.** ASCII boxes-and-arrows are unmaintainable and ugly to read.
+- **Bold numbers in tables and lists** (`**~98%**`, `**5–10K writes/sec**`). Inline numbers in prose get lost.
+- **3 picks per tech layer max.** Listing 7 databases is reference dump, not study guide. The user can't memorize 7; they'll memorize 3.
+- **Cons sections on every pattern.** Every architectural choice has a cost; name it.
+- **Human language, not academic.** *"Multi-chain ingestion is a derived-view problem with normalized event schema as abstraction"* is unspeakable. Rewrite to: *"the chain is source of truth, a normalized event schema is the abstraction layer."* Read every paragraph aloud — if it doesn't sound like something a staff engineer would say at a whiteboard, rewrite.
+- **State machines: shape, not specifics.** Show start states, terminal success/failure, intermediate gates. Note "derive specifics with the interviewer." Memorizing 30 states is not the bar.
+- **No PhD phrasing.** No "fundamentally", no "by construction" as filler, no over-nominalized prose.
+
+**Target length: 350-500 lines.** Denser than the original 600-800 target. Length is not the goal — *recall under pressure* is. The Coinbase v1 at 750 lines was unusable; the v2 rewrite at 370 lines was actually studyable.
+
+### Phase 6.5: Interview Playbook
+
+Write `knowledge/system-design/exercises/{{COMPANY}}/interview-playbook.md`. **This is a separate file from crash-course.md** with a different purpose and lifecycle:
+
+| File                  | Purpose                  | When to read                  |
+| --------------------- | ------------------------ | ----------------------------- |
+| `crash-course.md`     | Reference / patterns     | Weeks before, repeated review |
+| `interview-playbook.md` | Delivery mechanics      | Morning of, single read       |
+
+Required sections:
+1. **What the prompt is testing.** If Phase 0 captured the literal prompt language, parse it. Words like "zero-to-one", "real-life scenario", "depth and breadth" each have specific implications. State them.
+2. **The first 5 minutes** — clarifying questions checklist (functional scope, scale, non-functional priorities). Include explicit scripts the candidate can echo: *"I'll design for X and Y; I'll mention Z but not draw it. Push back if that's the wrong cut."*
+3. **Time budget table** — minute-by-minute for 60/75/90-min slots. Phases: requirements, API+model, breadth architecture, depth deep-dive, wrap (failure modes + scaling story).
+4. **The T-shape announcement** — a literal script the candidate says out loud when transitioning from breadth to depth, ranking 2-3 deep-dive candidates and pre-committing to the highest-stakes one.
+5. **Driving the conversation** — the "lead with rejected alternative" pattern with 2-3 example phrasings. How to handle pushback gracefully (companies vary; calibrate to the cultural tenets).
+6. **Whiteboard mechanics** — practical tips for the specific tool the company uses (CodeSignal, Excalidraw, etc.). Layout discipline, labels-on-arrows, one-canvas-per-component.
+7. **Failure-mode probe table** — the 6-10 "what if X breaks" questions the company is most likely to ask, with one-line answer shapes pre-loaded.
+8. **Recovery moves** — what to say when stuck on a tradeoff, when realizing the design has a flaw, when out of time, when asked something you don't know. Anti-bluff scripts.
+9. **Closing checklist** — 4 one-sentence hits for the last 5 minutes (failure modes, scale story, what to build next, what to monitor).
+10. **Behavioral signal during the round** — do/don't list calibrated to the company's cultural tenets.
+11. **Practice prompts (worked openings)** — 2-3 likely "real-life scenario" prompts. **Calibrate the prompts to what was learned in Phase 0:** if the company's interview prompt is generic ("design a real-life system"), target user-familiar systems (Venmo, Robinhood, a digital wallet) over company-internal exotica. For each prompt: clarifying questions, scope-commitment script, mermaid breadth sketch, ranked deep-dive candidates with rationale, tradeoffs to surface explicitly, expected probes.
+12. **Closing note on rehearsal** — the worked openings are answer keys for *moves*, not content. Drill on adjacent prompts, not these.
+
+**Target length: 250-400 lines.** Optimize for "rereadable in 30 minutes the morning of."
 
 ### Phase 7: Save Memory and Wrap Up
 
@@ -194,8 +236,13 @@ Target length: 600-800 lines. This is dense reference material — every paragra
    
    **Cross-cutting:**
    - {{COMPANY}}/patterns.md
-   - {{COMPANY}}/crash-course.md
-   
+   - {{COMPANY}}/crash-course.md (reference)
+   - {{COMPANY}}/interview-playbook.md (delivery mechanics + worked openings)
+
+   **Confirmed prompt (if known):** {literal prompt language from Phase 0}.
+
+   **Role focus:** {sub-team and what to bias toward, from Phase 0}.
+
    **Why:** {one sentence on the job context — why {{COMPANY}}, what role}.
    
    **How to apply:** {2-3 sentences on when this prep is relevant in future conversations}
@@ -204,7 +251,7 @@ Target length: 600-800 lines. This is dense reference material — every paragra
    - {3-5 bullets distilling the highest-signal architectural moves for {{COMPANY}}}
    ```
 2. Append a one-line entry to `/Users/david/.claude/projects/-Users-david-Workspace-resume/memory/MEMORY.md` under the project section.
-3. Update `knowledge/system-design/index.md` to add a new "{{COMPANY}} System Design Exercises" section linking to all 8 exercises + the crash course + patterns doc. Mirror the existing Shopify/Coinbase sections.
+3. Update `knowledge/system-design/index.md` to add a new "{{COMPANY}} System Design Exercises" section linking to all 8 exercises + the crash course + interview-playbook + patterns doc. Mirror the existing Shopify/Coinbase sections.
 4. Print a final summary to the user: file count, line count totals, the 8 exercise titles, the single biggest "mental shift" insight (e.g., for Coinbase it was "fail-closed for money, fail-open for browse — inverse of Shopify").
 
 ---
@@ -228,3 +275,29 @@ These optimizations make the workflow ~30% faster:
 7. **Don't re-read all 8 walkthroughs to write patterns/crash course.** The walkthrough briefs you wrote in Phase 3 already encode the patterns. Use accumulated research + brief context. Sample 2-3 Tradeoffs Summary / Common Mistakes sections if you need to verify a specific claim.
 
 8. **Always save a project memory entry at the end.** Future sessions will reference it.
+
+## Lessons learned from the Coinbase v2 iteration (2026-04-25) — apply on future runs
+
+The Coinbase v1 generation followed the original template and produced a 750-line crash course that had to be substantially rewritten when the user actually started studying it. These lessons cause the next run to land closer to a usable v1:
+
+9. **Ask for role sub-team and prompt language *before* generation, not after.** Coinbase v1 was generic; the user is on Consumer-Retail Cash, which means matching-engine and ML-platform depth was wasted. The new Phase 0 step prevents this. If the user has the literal interview prompt, that's the highest-signal input — it shapes the playbook decisively.
+
+10. **Crash course = reference. Playbook = morning-of.** These are different files with different lifecycles. Don't conflate them. The crash course is for repeated review weeks before; the playbook is for one read the morning of, and contains delivery scripts, time budgets, and worked openings — material that has no place in a reference doc.
+
+11. **3 picks per tech layer beats listing every option.** Listing 7 databases looks thorough but is unstudyable. The user can hold 3 things in working memory and articulate the rejected alternatives for them. More than 3 is reference-dump theater.
+
+12. **Cons / tradeoffs on every pattern.** The original template emphasized "why this wins" without "what it costs." Staff candidates are scored on tradeoff awareness. Every pattern needs a cons section.
+
+13. **Mermaid not ASCII.** ASCII boxes-and-arrows worked in 2015. They're unmaintainable now and signal effort, not clarity. Mermaid renders, diffs cleanly, and is faster to write.
+
+14. **Bold the numbers.** Inline numbers in prose disappear. Bold them in tables and lists. The user scans for numbers when reviewing — make them findable.
+
+15. **Read every paragraph aloud.** If it sounds like a dissertation, rewrite. *"Multi-chain ingestion is a derived-view problem with a normalized event schema as the abstraction"* is unspeakable. Staff engineers don't talk like that at whiteboards.
+
+16. **State machines: shape, not specifics.** Showing a 30-state diagram tells the candidate to memorize 30 states. They won't, and they shouldn't. Show the shape (start / terminal-success / terminal-failure / intermediate gates) and note "derive specifics with the interviewer." That matches reality.
+
+17. **Length target: 350-500 lines for crash course, 250-400 for playbook.** The original 600-800 target was wrong. Density beats volume; recall under pressure is the metric.
+
+18. **Domain primer if needed.** Some companies require domain knowledge the candidate may not have (blockchain finality, payment rails, GPU economics). Include a "just enough X" section with 3 concepts max. Skip if generic web.
+
+19. **Worked openings target user-familiar systems** when the prompt is generic ("zero-to-one", "real-life scenario"). Not company-internal exotica. The user knows Venmo, Robinhood, Cash App from the consumer side; they don't know Coinbase's internal Aeron Cluster from the inside. The interviewer is testing structure-from-blank-slate, not insider knowledge.
