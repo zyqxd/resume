@@ -77,75 +77,127 @@ The newest and fastest-growing topic area. Covers model serving at scale, featur
 
 Practice these end-to-end system design exercises. Each includes a prompt with constraints and a detailed walkthrough showing how to approach it step by step.
 
-### [[exercises/01-collaborative-document-editor/PROMPT|Exercise 1: Real-Time Collaborative Document Editor]]
+### [[exercises/general/01-collaborative-document-editor/PROMPT|Exercise 1: Real-Time Collaborative Document Editor]]
 
 Design a system like Google Docs. Covers CRDTs vs Operational Transformation, WebSocket scaling, conflict resolution, offline editing, and cursor synchronization. This exercise tests your understanding of real-time systems, distributed consistency, and managing concurrent writes.
 
-**[[exercises/01-collaborative-document-editor/WALKTHROUGH|Full walkthrough]]**
+**[[exercises/general/01-collaborative-document-editor/WALKTHROUGH|Full walkthrough]]**
 
-### [[exercises/02-ai-powered-search/PROMPT|Exercise 2: AI-Powered Search System]]
+### [[exercises/general/02-ai-powered-search/PROMPT|Exercise 2: AI-Powered Search System]]
 
 Design an e-commerce search system combining keyword and semantic search. Covers embedding generation, vector databases, hybrid search with RRF, RAG for product Q&A, personalized ranking, and LLM caching. This exercise is representative of the new wave of AI-integrated system design questions.
 
-**[[exercises/02-ai-powered-search/WALKTHROUGH|Full walkthrough]]**
+**[[exercises/general/02-ai-powered-search/WALKTHROUGH|Full walkthrough]]**
 
-### [[exercises/03-distributed-task-scheduler/PROMPT|Exercise 3: Distributed Task Scheduler]]
+### [[exercises/general/03-distributed-task-scheduler/PROMPT|Exercise 3: Distributed Task Scheduler]]
 
 Design a distributed cron-like system. Covers partitioned polling, consensus-based coordination, exactly-once semantics via idempotency, worker pool scaling, multi-tenant isolation, and failure recovery. This exercise tests distributed systems fundamentals and fault tolerance.
 
-**[[exercises/03-distributed-task-scheduler/WALKTHROUGH|Full walkthrough]]**
+**[[exercises/general/03-distributed-task-scheduler/WALKTHROUGH|Full walkthrough]]**
 
 ### Shopify System Design Exercises
 
-Commerce-specific system design exercises modeled after Shopify's most frequently asked interview questions. Start with the **[[exercises/shopify-crash-course|Shopify Staff System Design Crash Course]]** for a self-contained guide to the architecture patterns, technology choices, and failure modes. The [[exercises/shopify-patterns|cross-cutting patterns and gotchas]] reference maps these patterns back to specific exercises.
+Commerce-specific system design exercises modeled after Shopify's most frequently asked interview questions. Start with the **[[exercises/shopify/crash-course|Shopify Staff System Design Crash Course]]** for a self-contained guide to the architecture patterns, technology choices, and failure modes. The [[exercises/shopify/patterns|cross-cutting patterns and gotchas]] reference maps these patterns back to specific exercises.
 
-### [[exercises/04-shopify-checkout-system/PROMPT|Exercise 4: Checkout System (Shopify)]]
+### [[exercises/shopify/01-checkout-system/PROMPT|Exercise 1: Checkout System (Shopify)]]
 
 Design a checkout system handling BFCM-scale traffic. Covers CartSink/CardServer PCI isolation, the Resumption pattern for exactly-once payments, cart-to-order state machines, and multi-provider failover with Semian circuit breakers.
 
-**[[exercises/04-shopify-checkout-system/WALKTHROUGH|Full walkthrough]]**
+**[[exercises/shopify/01-checkout-system/WALKTHROUGH|Full walkthrough]]**
 
-### [[exercises/05-shopify-flash-sale-system/PROMPT|Exercise 5: Flash Sale / BFCM Traffic (Shopify)]]
+### [[exercises/shopify/02-flash-sale-system/PROMPT|Exercise 2: Flash Sale / BFCM Traffic (Shopify)]]
 
 Design a system handling 284M req/min during flash sales. Covers pod-based scaling, Sorting Hat load shedding, storefront extraction, queue-based admission control, and pre-event preparation with Genghis load testing.
 
-**[[exercises/05-shopify-flash-sale-system/WALKTHROUGH|Full walkthrough]]**
+**[[exercises/shopify/02-flash-sale-system/WALKTHROUGH|Full walkthrough]]**
 
-### [[exercises/06-shopify-inventory-management/PROMPT|Exercise 6: Inventory Management (Shopify)]]
+### [[exercises/shopify/03-inventory-management/PROMPT|Exercise 3: Inventory Management (Shopify)]]
 
 Design real-time inventory tracking across warehouses and channels. Covers reservation-based allocation with TTL, adaptive concurrency control (optimistic + pessimistic), cross-channel sync via Kafka, and oversell prevention under flash sale concurrency.
 
-**[[exercises/06-shopify-inventory-management/WALKTHROUGH|Full walkthrough]]**
+**[[exercises/shopify/03-inventory-management/WALKTHROUGH|Full walkthrough]]**
 
-### [[exercises/07-shopify-multi-tenant-platform/PROMPT|Exercise 7: Multi-Tenant Platform (Shopify)]]
+### [[exercises/shopify/04-multi-tenant-platform/PROMPT|Exercise 4: Multi-Tenant Platform (Shopify)]]
 
 Design pod-based multi-tenant architecture for millions of merchants. Covers database-per-pod sharding, Sorting Hat routing, Ghostferry zero-downtime migration, noisy neighbor prevention, and Packwerk module boundaries.
 
-**[[exercises/07-shopify-multi-tenant-platform/WALKTHROUGH|Full walkthrough]]**
+**[[exercises/shopify/04-multi-tenant-platform/WALKTHROUGH|Full walkthrough]]**
 
-### [[exercises/08-shopify-webhook-delivery/PROMPT|Exercise 8: Webhook Delivery (Shopify)]]
+### [[exercises/shopify/05-webhook-delivery/PROMPT|Exercise 5: Webhook Delivery (Shopify)]]
 
 Design webhook delivery for thousands of third-party apps. Covers at-least-once delivery, Kafka-based event ingestion, per-endpoint queue isolation, HMAC signing, exponential backoff with jitter, and BFCM-scale fan-out.
 
-**[[exercises/08-shopify-webhook-delivery/WALKTHROUGH|Full walkthrough]]**
+**[[exercises/shopify/05-webhook-delivery/WALKTHROUGH|Full walkthrough]]**
 
-### [[exercises/09-shopify-product-search/PROMPT|Exercise 9: Product Search (Shopify)]]
+### [[exercises/shopify/06-product-search/PROMPT|Exercise 6: Product Search (Shopify)]]
 
 Design multi-tenant product search with variant-aware indexing. Covers hybrid index isolation, CDC-based real-time updates, faceted search, merchant-customizable relevance boosting, autocomplete, and AI-powered discovery extensions.
 
-**[[exercises/09-shopify-product-search/WALKTHROUGH|Full walkthrough]]**
+**[[exercises/shopify/06-product-search/WALKTHROUGH|Full walkthrough]]**
 
-### [[exercises/10-shopify-rate-limiting/PROMPT|Exercise 10: Rate Limiting (Shopify)]]
+### [[exercises/shopify/07-rate-limiting/PROMPT|Exercise 7: Rate Limiting (Shopify)]]
 
 Design cost-based rate limiting for a GraphQL API. Covers static query complexity analysis, leaky bucket with distributed Redis enforcement, fail-open policy, per-app per-merchant buckets, and local approximation for sub-ms latency.
 
-**[[exercises/10-shopify-rate-limiting/WALKTHROUGH|Full walkthrough]]**
+**[[exercises/shopify/07-rate-limiting/WALKTHROUGH|Full walkthrough]]**
 
-### [[exercises/11-shopify-payment-processing/PROMPT|Exercise 11: Payment Processing (Shopify)]]
+### [[exercises/shopify/08-payment-processing/PROMPT|Exercise 8: Payment Processing (Shopify)]]
 
 Design a PCI-compliant payment pipeline. Covers CardSink/CardServer tokenization, the Resumption pattern for exactly-once semantics, payment state machines, multi-gateway waterfall failover, and per-region Semian circuit breakers.
 
-**[[exercises/11-shopify-payment-processing/WALKTHROUGH|Full walkthrough]]**
+**[[exercises/shopify/08-payment-processing/WALKTHROUGH|Full walkthrough]]**
+
+### Coinbase System Design Exercises
+
+Crypto-exchange and custody-grade financial system design exercises modeled after Coinbase's most frequently asked staff interview questions. Start with the **[[exercises/coinbase/crash-course|Coinbase Staff System Design Crash Course]]** for a self-contained guide. The [[exercises/coinbase/patterns|cross-cutting patterns and gotchas]] reference maps these patterns back to specific exercises.
+
+### [[exercises/coinbase/01-trading-engine/PROMPT|Exercise 1: Order Matching Engine (Coinbase)]]
+
+Design a sub-millisecond crypto matching engine. Covers Aeron Cluster + RAFT replication of compute, single-threaded per-pair matching with deterministic WAL replay, two-path split between trading hot loop and market data fan-out, and 24/7 ops with circuit-breaker halts.
+
+**[[exercises/coinbase/01-trading-engine/WALKTHROUGH|Full walkthrough]]**
+
+### [[exercises/coinbase/02-wallet-custody/PROMPT|Exercise 2: Wallet Custody Architecture (Coinbase)]]
+
+Design hot/warm/cold custody with MPC, HSM, and multi-sig signing. Covers cb-mpc threshold signing, CDS air-gap for cold storage, withdrawal allowlist + velocity caps, address risk scoring via Node2Vec, and insider-threat-aware operational ceremonies.
+
+**[[exercises/coinbase/02-wallet-custody/WALKTHROUGH|Full walkthrough]]**
+
+### [[exercises/coinbase/03-financial-ledger/PROMPT|Exercise 3: Financial Ledger Service (Coinbase)]]
+
+Design the FinHub-Ledger team's signature double-entry append-only ledger. Covers immutable journal entries, idempotency keys end-to-end, sub-account partitioning for hot accounts, saga compensation, continuous reconciliation against chain and bank, and FIFO/LIFO/HIFO cost basis tracking.
+
+**[[exercises/coinbase/03-financial-ledger/WALKTHROUGH|Full walkthrough]]**
+
+### [[exercises/coinbase/04-blockchain-indexer/PROMPT|Exercise 4: Multi-Chain Blockchain Indexer (Coinbase)]]
+
+Design ingestion across 60+ chains. Covers ChainStorage / Chainsformer / ChaIndex, per-chain pipelines (Solana I/O lesson), Snapchain blue/green node deploys, NodeSmith AI-driven upgrades, hybrid push+poll ingestion, and reorg as first-class state machine.
+
+**[[exercises/coinbase/04-blockchain-indexer/WALKTHROUGH|Full walkthrough]]**
+
+### [[exercises/coinbase/05-market-data-feed/PROMPT|Exercise 5: Real-Time Market Data Feed (Coinbase)]]
+
+Design Coinbase Explore -- live prices for thousands of pairs to millions of clients. Covers LMAX-style ring buffer (38x improvement over Go channels), multi-tier fan-out, snapshot+diff WebSocket protocol with sequence numbers, conflation for slow consumers, and predictive autoscaling for 10x volatility.
+
+**[[exercises/coinbase/05-market-data-feed/WALKTHROUGH|Full walkthrough]]**
+
+### [[exercises/coinbase/06-fraud-risk-scoring/PROMPT|Exercise 6: Fraud / Risk Scoring (Coinbase)]]
+
+Design real-time transaction risk scoring with Spark RTM. Covers RocksDB-backed streaming aggregations (250ms target), Lakebase online prediction serving, sequence features for LSTM/Transformer models, online/offline parity >98%, and score/decide/act layer separation.
+
+**[[exercises/coinbase/06-fraud-risk-scoring/WALKTHROUGH|Full walkthrough]]**
+
+### [[exercises/coinbase/07-deposit-withdrawal/PROMPT|Exercise 7: Deposit / Withdrawal Pipeline (Coinbase)]]
+
+Design the operational seam between blockchain state and the internal ledger. Covers per-chain confirmation policies with reorg handling, withdrawal state machine across signing tiers, RBF and ETH nonce ordering, batch withdrawals with saga compensation, and continuous reconciliation.
+
+**[[exercises/coinbase/07-deposit-withdrawal/WALKTHROUGH|Full walkthrough]]**
+
+### [[exercises/coinbase/08-kyc-onboarding/PROMPT|Exercise 8: KYC / Account Opening (Coinbase)]]
+
+Design Temporal-orchestrated KYC across 100+ jurisdictions. Covers tier engine with versioned policy, document verification with vendor abstraction, OFAC / PEP / adverse media screening, risk-based decisioning, save-resume across sessions, and PII vault with field-level encryption.
+
+**[[exercises/coinbase/08-kyc-onboarding/WALKTHROUGH|Full walkthrough]]**
 
 ---
 
