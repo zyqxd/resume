@@ -87,32 +87,19 @@ Coinbase explicitly says: *"Being wrong with confidence is a negative signal; hu
 
 ---
 
-## CodeSignal Whiteboard Mechanics
-
-CodeSignal's whiteboard is rougher than Excalidraw. Plan accordingly.
-
-- **Pre-build a layout in your head:** clients top, edge/API middle-top, services middle, data stores bottom. Always.
-- **Boxes have labels, arrows have labels.** An unlabeled arrow is dead weight.
-- **Number sequence steps on arrows** when you walk a flow ("1. POST /transfer, 2. validate, 3. write outbox").
-- **Don't try to be pretty.** Legibility > aesthetics.
-- **Keep one whiteboard per component on deep-dive.** Don't jam schema, sequence, and architecture on one canvas.
-- **Practice the tool before the interview.** 30 minutes the day before is enough.
-
----
-
 ## Failure-Mode Probes to Anticipate
 
 Coinbase will ask at least 3 of these. Pre-load answers:
 
-| Probe                                                  | Answer shape                                                                       |
-| ------------------------------------------------------ | ---------------------------------------------------------------------------------- |
-| *"What if the database goes down mid-write?"*          | Idempotency key + outbox + retry. Walk the state machine forward, never rollback. |
-| *"What if a retry hits a different replica/backend?"*  | Per-backend namespacing on idempotency keys; check status before failover.        |
-| *"What if a chain reorgs?"*                            | Tentative vs. finalized states; reverse tentative credits, never finalized.       |
-| *"What if traffic 10x's during a market event?"*       | Predictive pre-warm 30–60 min ahead; circuit breakers for the unforecasted tail.   |
-| *"How do you know the ledger is correct?"*             | Continuous reconciliation against external sources; financial drift never auto-corrects, pages on-call. |
-| *"What if a malicious insider tries to move funds?"*   | No single human can move funds. Quorum approvers + cooling-off + audit trail.     |
-| *"What's your blast radius if cache X fails?"*         | Fail-open for reads (degraded UX), fail-closed for money paths (halt withdrawals).|
+| Probe                                                    | Answer shape                                                                                               |
+| -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| *"What if the database goes down mid-write?"*            | Idempotency key + outbox + retry. Walk the state machine forward, never rollback.                          |
+| *"What if a retry hits a different replica/backend?"*    | Per-backend namespacing on idempotency keys; check status before failover.                                 |
+| *"What if a chain reorgs?"*                              | Tentative vs. finalized states; reverse tentative credits, never finalized.                                |
+| *"What if traffic 10x's during a market event?"*         | Predictive pre-warm 30–60 min ahead; circuit breakers for the unforecasted tail.                           |
+| *"How do you know the ledger is correct?"*               | Continuous reconciliation against external sources; financial drift never auto-corrects, pages on-call.    |
+| *"What if a malicious insider tries to move funds?"*     | No single human can move funds. Quorum approvers + cooling-off + audit trail.                              |
+| *"What's your blast radius if cache X fails?"*           | Fail-open for reads (degraded UX), fail-closed for money paths (halt withdrawals).                         |
 | *"Walk me through the worst incident this could cause."* | Pick the actual worst (double-credit, lost funds, missed sanction). Show how the architecture prevents it. |
 
 ---
