@@ -1,0 +1,15 @@
+- automation vs blast campaign
+- bypassing UGC concerns of cash platform
+- interjecting myself in launch blockers or lagging components
+  - customer directory issue
+- last minute release strategy change
+- processes, task delegation, rituals
+
+- what does (my) staff leadership look like?
+  - lead by example
+  - implement processes
+  - read designs
+  - keeping people up to date
+  - are people clear on what is happening
+  - do they know what is coming next
+  - do they have the context to move with me
