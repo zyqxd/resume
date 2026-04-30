@@ -1,8 +1,8 @@
-# Coinbase Hiring Manager Round — Platform (Overseer)
+# Coinbase Behavioral — Staff Engineer Round
 
-**Role context:** Staff platform engineer on Overseer — the correctness layer across Coinbase's fund flows. Invariant definition framework, real-time detection engine, AI-powered guardrails, partner-team adoption. The role is *platform-builder*, not feature-builder, and it sits at the seam between Transfer Service, Ledger, Payments, Risk, and Compliance.
+Default audience: a generic Coinbase staff engineer interviewing you for cultural / behavioral fit. Cash Neighborhoods is your spine project — lean here when they ask anything substantive.
 
-**Why this matters for the round:** the hiring manager is screening for someone who has actually owned correctness *across* services, not just inside one — and who has driven adoption of platform work across teams that didn't ask for it. Cash Neighborhoods is the closest thing in your background to that shape. Lean into it.
+If you find out the interviewer is on the **Overseer** team or they steer toward platform/correctness topics, layer in the [Overseer Overlay](#overseer-overlay) below.
 
 ---
 
@@ -11,7 +11,6 @@
 - **Mission:** "increase economic freedom in the world."
 - **Coinbase principles to name when natural:** #SecurityFirst, #ExplicitTradeoffs, #OneCoinbase, #1-2-Automate.
 - **Tone:** direct, metric-led, owns the call. No hedging.
-- **One-sentence Overseer pitch (memorize):** *"The gap between 'each service works' and 'the system is correct' is exactly the gap I spent my last year at Block working in — I want to keep working in that gap, on a financial system where the cost of being wrong is real."*
 
 ---
 
@@ -34,20 +33,6 @@ Three beats.
 > **Phase transition** — Coinbase is going from exchange to onchain platform: Base, smart wallets, gasless tx. That's a zero-to-one bet on top of a profitable core, which is exactly the structure where staff engineers have the most leverage.
 >
 > **Engineering principles match how I already work** — #ExplicitTradeoffs and #SecurityFirst aren't slogans for me. Cash Neighborhoods was a year of explicit tradeoffs against a much higher security bar than Square's, and the move I'd repeat at Coinbase is treating the constraint owner's bar as the *input* to the design, not the audit at the end."
-
-## Why Overseer specifically?
-
-This is the most important "why" for a hiring-manager round. They want to hear that you read the JD and understood what's actually hard.
-
-> "Three reasons it lines up with what I want to be doing:
->
-> **One — the problem framing matches my last project.** Cash Neighborhoods was the first time Cash and Square had been bridged at production scale. The hardest part wasn't the feature — it was making *cross-system correctness* a designed property: every flow from Square into Cash had to clear Cash's much higher bar, and we redesigned the pipeline to make that a property of the architecture rather than something we audited at the end. Overseer is that same problem, generalized — making correctness across fund flows a property of the platform instead of a coordination problem between teams.
->
-> **Two — it's a platform-builder role.** I've been pulled toward platform work the last few years and I want it to be the explicit job, not a side effect of feature work. Building the invariant framework and detection engine that other teams onboard onto is exactly the leverage shape I want.
->
-> **Three — the AI guardrails workstream is the part of the role I'm most curious about.** Predictive consistency models that catch deviations before settlement, and proactive invariant discovery — that's the unsolved part of the platform, and it's where I'd most want to be contributing to direction, not just executing on it."
-
-Pause. Let them ask.
 
 ---
 
@@ -82,8 +67,6 @@ The headline tradeoff. Be ready to defend this — interviewers will probe alter
 - *Lift Square's marketing platform into Cash's environment.* Sounds clean — single platform, single bar. Rejected because Cash's security bar is for *consumer money paths*, and our marketing platform was never designed to that bar. Forcing it would have meant rewriting the whole thing under a security review, not just bridging.
 - *Build a thin shared service in the middle.* Tempting — it's the "platform" answer. Rejected for v1 because nobody owned the middle, and a middle layer with no team is worse than a clear seam between two teams that do exist.
 
-**Why this is Overseer-relevant:** the call I made is exactly the pattern Overseer institutionalizes — define the contract at the seam, let each side keep what it's good at, enforce the bar as a property of the *interface*, not a property of either service. I'd say that explicitly if it lands naturally.
-
 ## How would you adapt if usage increases 10x?
 
 > "10x usually breaks the *cheapest* component first, not the most-engineered one. So before scaling anything, I'd profile and find which dependency is cheapest — that's almost always where the next failure is."
@@ -91,7 +74,7 @@ The headline tradeoff. Be ready to defend this — interviewers will probe alter
 For Cash Neighborhoods specifically:
 - **First bottleneck at 10x: Cash Messages delivery throughput.** That's *their* infrastructure, not ours, so the answer is *not* "scale our service." It's tighter targeting upfront so we send fewer, more relevant messages. We were already at 7x lift over baseline; better targeting compounds.
 - **Second: Square→Cash data sync.** Today batch; at 10x I'd consider event-streaming the deltas to keep steady-state load flat and only spike on campaign launch.
-- **Third: the security review pipeline becomes the human bottleneck, not the systems.** #1-2-Automate the recurring patterns of review so legal/security only sees the novel cases. (This is the bridge to Overseer — making the *correctness review* part of the platform, not a coordination cost.)
+- **Third: the security review pipeline becomes the human bottleneck, not the systems.** #1-2-Automate the recurring patterns of review so legal/security only sees the novel cases.
 
 ---
 
@@ -119,8 +102,6 @@ For Cash Neighborhoods specifically:
 >
 > The launch hit its targeted-send volume on schedule."
 
-**Why this story is gold for Overseer:** the JD calls out *driving adoption* and *partnering across Transfer Service, Ledger, Payments, Risk, Compliance.* This is exactly that pattern in miniature — going across team boundaries to make the system work. Drop that connection if asked a follow-up.
-
 ## A problem that took multiple times to resolve
 
 > "Cash and Square had been trying to bridge networks for years. There were at least two prior internal attempts I inherited the post-mortems from. Both stalled at the same place: the security and data governance review.
@@ -135,7 +116,7 @@ For Cash Neighborhoods specifically:
 
 ## How do you use AI day-to-day?
 
-The JD has unusually specific AI language — "responsibly use," "human-in-the-loop," "measurable improvements." Hit those notes.
+Probing two things: are you actually using it productively, and do you have a *take* on what works vs. what doesn't. Show range, not rah-rah.
 
 > "Three buckets — what's worked, what hasn't, where I'm calibrating.
 >
@@ -145,7 +126,7 @@ The JD has unusually specific AI language — "responsibly use," "human-in-the-l
 >
 > **Where I move significantly faster:** anything with a clear input/output contract — small refactors, test scaffolding, runbooks, migrations. I don't move faster on architecture or on debugging weird production behavior; those still benefit from carrying state in my head.
 >
-> **My read for engineering teams:** the leverage isn't 'AI writes the code.' It's that AI compresses the time from *idea* to *first concrete artifact you can argue about*. That's what changes the meeting cadence on a project — and the same compounding is what excites me about the AI guardrails workstream on Overseer. The same AI that lets a partner team ship faster should let the correctness layer keep pace."
+> **My read for engineering teams:** the leverage isn't 'AI writes the code.' It's that AI compresses the time from *idea* to *first concrete artifact you can argue about*. That's what changes the meeting cadence on a project."
 
 If they push on Coinbase-specific AI angle: *"Eide's piece on Coinbase's AI strategy lands the same way I think about it — model choice is interchangeable, data quality and human-in-the-loop are the moat."*
 
@@ -154,18 +135,14 @@ If they push on Coinbase-specific AI angle: *"Eide's piece on Coinbase's AI stra
 Pick 3–4. Front-load team/work, close on strategic.
 
 **Day-to-day / team / work:**
-1. "What does Overseer look like today vs. what you want it to look like in 12 months? Where's the biggest gap?"
-2. "Of the partner teams — Transfer Service, Ledger, Payments, Risk, Compliance — which one's adoption is hardest right now, and why?"
+1. "What's the team working on right now, and what does the work look like 12 months out? Where's the biggest gap between today and where you want to be?"
+2. "Where does this team sit on the Phase 3 → Phase 4 transition? Is the work mostly serving Coinbase's existing exchange product, or building toward Base / onchain primitives?"
 3. "What does the on-call rotation look like, and what's the realistic incident frequency? I want to understand operational load before I optimize for it."
 4. "What's the most recent technical decision the team made that you'd characterize as #ExplicitTradeoffs in action — where the rejected alternative was actually compelling?"
 
-**Overseer-specific:**
-5. "On the AI guardrails workstream — is there a shipped version of predictive consistency models today, or is it still in design? Where would I be expected to have an opinion in week one?"
-6. "How do you think about the build-vs-buy decision for the invariant detection engine itself? Is there a baseline you've already committed to?"
-
 **Strategic / closing:**
-7. "If I'm successful at the staff bar in the first 6 months, what does that look like concretely? What's a *bad* version of staff in this team that I should know to avoid?"
-8. "What's the failure mode you've seen most often when staff engineers join from outside crypto? I'd rather hear the pattern than walk into it."
+5. "If I'm successful at the staff bar in the first 6 months, what does that look like concretely? What's a *bad* version of staff in this team that I should know to avoid?"
+6. "What's the failure mode you've seen most often when staff engineers join from outside crypto? I'd rather hear the pattern than walk into it."
 
 **Don't ask:**
 - Compensation, RSU vesting, remote policy — recruiter handles those.
@@ -180,7 +157,60 @@ Pick 3–4. Front-load team/work, close on strategic.
 - **Take pushback by leaning in, not defending.** "That's fair — let me think." Three-second pause. Then revise.
 - **Stop talking when you've made the point.** 90 seconds is the target; 2 minutes is the ceiling.
 - **Mission and principles get one mention each, max two.** More than that and it sounds rehearsed.
-- **Bridge to Overseer when natural.** The "going across team boundaries to make the system work" beat is the connective tissue between Cash Neighborhoods and the role. Use it.
+
+---
+---
+
+# Overseer Overlay
+
+Deploy this material **only** if you learn the interviewer is on the Overseer team or they steer toward platform-correctness / AI-guardrails / cross-service invariant topics. Otherwise leave it in your back pocket — over-pitching a role-specific angle to a generic interviewer reads as rehearsed.
+
+## Role context (for your own framing)
+
+Staff platform engineer on Overseer — the correctness layer across Coinbase's fund flows. Invariant definition framework, real-time detection engine, AI-powered guardrails, partner-team adoption. Platform-builder, not feature-builder. Sits at the seam between Transfer Service, Ledger, Payments, Risk, Compliance.
+
+The hiring signal is: someone who has owned correctness *across* services and driven adoption of platform work across teams that didn't ask for it.
+
+## One-sentence Overseer pitch (memorize)
+
+> *"The gap between 'each service works' and 'the system is correct' is exactly the gap I spent my last year at Block working in — I want to keep working in that gap, on a financial system where the cost of being wrong is real."*
+
+## Why Overseer specifically? (when asked)
+
+> "Three reasons.
+>
+> **One — the problem framing matches my last project.** Cash Neighborhoods was the first time Cash and Square had been bridged at production scale. The hardest part wasn't the feature — it was making *cross-system correctness* a designed property: every flow from Square into Cash had to clear Cash's much higher bar, and we redesigned the pipeline to make that a property of the architecture rather than something we audited at the end. Overseer is that same problem, generalized — making correctness across fund flows a property of the platform instead of a coordination problem between teams.
+>
+> **Two — it's a platform-builder role.** I've been pulled toward platform work the last few years and I want it to be the explicit job, not a side effect of feature work. Building the invariant framework and detection engine that other teams onboard onto is exactly the leverage shape I want.
+>
+> **Three — the AI guardrails workstream is the part I'm most curious about.** Predictive consistency models that catch deviations before settlement, and proactive invariant discovery — that's the unsolved part of the platform, and where I'd most want to be contributing to direction, not just executing on it."
+
+## Addendums to generic answers (deploy if a follow-up opens the door)
+
+**On the architectural call (Square owns marketing / Cash owns delivery):**
+> "The call I made is exactly the pattern Overseer institutionalizes — define the contract at the seam, let each side keep what it's good at, enforce the bar as a property of the *interface* rather than a property of either service."
+
+**On the went-wrong story (customer directory + SQLO):**
+> "This is the pattern I'd carry into Overseer. The JD calls out driving adoption across Transfer Service, Ledger, Payments, Risk, Compliance — that's exactly this work in miniature. Going across team boundaries to make the system work is the same job at a different scale."
+
+**On the 10x scaling answer:**
+> "The third bottleneck — security review as the human bottleneck — is the bridge to Overseer for me. Making the *correctness review* part of the platform, not a coordination cost, is the high-leverage version of that problem."
+
+**On the AI day-to-day answer:**
+> "The same compounding is what excites me about the AI guardrails workstream on Overseer. The same AI that lets partner teams ship faster should let the correctness layer keep pace — otherwise the gap widens."
+
+## Overseer-specific questions to ask
+
+Use 1–2 of these *in addition to* the generic question list, when interviewing with Overseer team members.
+
+1. "What does Overseer look like today vs. what you want it to look like in 12 months? Where's the biggest gap?"
+2. "Of the partner teams — Transfer Service, Ledger, Payments, Risk, Compliance — which one's adoption is hardest right now, and why?"
+3. "On the AI guardrails workstream — is there a shipped version of predictive consistency models today, or is it still in design? Where would I be expected to have an opinion in week one?"
+4. "How do you think about build-vs-buy for the invariant detection engine itself? Is there a baseline you've already committed to?"
+
+## Overlay tactic
+
+- **Bridge to Overseer when natural** — the "going across team boundaries to make the system work" beat is the connective tissue between Cash Neighborhoods and the role. Use it once or twice, not in every answer.
 
 ---
 ---

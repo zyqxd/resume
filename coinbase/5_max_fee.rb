@@ -3,8 +3,6 @@
 # You also have a block size limit of 100. Your goal is to select a set of transactions whose total 
 # size does not exceed the block size while maximizing the total fee. You do not need the exact 
 # optimal solution if a scalable heuristic is more appropriate.
-  
-  
 
 # Follow-ups: Each transaction may have a parent transaction. A child can only be included if its 
 # parent is included in the same block. One parent can have multiple children, but each child has only one parent.
